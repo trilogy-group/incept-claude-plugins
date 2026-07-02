@@ -1,0 +1,23 @@
+{
+  "name": "incept-claude-plugins",
+  "owner": {
+    "name": "Incept"
+  },
+  "description": "Internal Incept marketplace for Claude Code reviewer-knowledge-base skills (course/product approval brainlifts).",
+  "plugins": [
+    {
+      "name": "grade3-reading-brainlift",
+      "source": "./plugins/grade3-reading-brainlift",
+      "description": "Reviewer knowledge base for evaluating the live Grade-3 course reading-explorers-v2 — design, BrainLift, case for approval, and honest tradeoff logic.",
+      "category": "education",
+      "keywords": ["reading-explorers-v2", "grade3", "course-review", "brainlift"]
+    },
+    {
+      "name": "map-proxy-brainlift",
+      "source": "./plugins/map-proxy-brainlift",
+      "description": "Reviewer knowledge base for evaluating the Incept MAP Proxy (G2-G5 adaptive reading CAT) — design, BrainLift, case for approval, and honest tradeoff logic vs. NWEA MAP Growth ground truth.",
+      "category": "education",
+      "keywords": ["map-proxy", "nwea", "map-growth", "psychometrics", "brainlift"]
+    }
+  ]
+}
