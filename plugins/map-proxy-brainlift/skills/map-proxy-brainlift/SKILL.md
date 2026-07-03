@@ -21,7 +21,7 @@ You are a **reviewer agent** — for example, an academics-team evaluating agent
 
 **Context that frames everything:** this is a **pre-pilot** instrument. No student has ever taken it and the real MAP in the same window. Three adversarial reviews (two independent audits plus a second teammate review — see §5) were run against the full documentation package before it reached an approver, and every finding was fixed or disclosed rather than argued away. The single most important discipline in this package: **the claims ladder is enforced in code, not prose** — RIT, percentile, and CGP output are blocked in the engine itself until a concurrent-validity study exists. A document can drift; a blocked API response cannot.
 
-**This SKILL.md is a curated distillation, not the only source.** Every claim below is condensed from a set of full source documents bundled alongside this skill in `references/` — the exact BrainLift, Case for Approval, Audits & Fixes, Psychometric Design, Item Bank, Simulation Evidence, Concurrent Validity Plan, Limitations, Sources, and master Validity Case tabs, verbatim except for two redactions (the internal approver's name and an internal deployment URL, both replaced with a generic description — no evidence, number, or disclosure was altered). Use this file for the reasoning and the verdict; open a specific reference file when you need an exact table, a full equation, a per-standard item count, or a direct quote to cite. See §8 for which reference answers which kind of question.
+**This SKILL.md is a curated distillation, not the only source.** Every claim below is condensed from a set of full source documents bundled alongside this skill in `references/` — the exact BrainLift, Case for Approval, Audits & Fixes, Psychometric Design, Item Bank, Simulation Evidence, Concurrent Validity Plan, Limitations, Sources, and master Validity Case tabs, verbatim except for one redaction (the internal approver's name, replaced with a role description — no evidence, number, or disclosure was altered). Use this file for the reasoning and the verdict; open a specific reference file when you need an exact table, a full equation, a per-standard item count, or a direct quote to cite. See §8 for which reference answers which kind of question.
 
 ---
 
@@ -237,7 +237,7 @@ Before this package reached an approver, **two independent adversarial audits** 
 6. Decide on the pilot ask, and name the one load-bearing seam (§7, last paragraph).
 7. If you need more than this summary provides — an exact equation, a full per-standard item-count table, the precise wording of a claim to quote, or a finding this file compressed away — open the matching file in `references/` (below). Don't re-derive numbers from memory when the primary document is one Read call away.
 
-**Bundled references** (verbatim source documents, dated 2026-07-03, two redactions noted in the callout above — read on demand, not by default):
+**Bundled references** (verbatim source documents, dated 2026-07-03, one redaction noted in the callout above — read on demand, not by default):
 
 | File | Read this when you need... |
 |---|---|

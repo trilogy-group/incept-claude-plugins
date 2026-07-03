@@ -352,11 +352,17 @@ The interface follows MAP's publicly documented interaction conventions, so that
 
 The full adaptive test is live. The direct no-login route is gated behind the `PUBLIC_TEST_ENABLED` flag (default off) so the item bank cannot be farmed anonymously:
 
-**Direct assessment URL (flag-gated, internal — omitted from this public document):**
-Delivers a 40–43-item adaptive G2–G5 reading assessment in a browser via the `/test` route behind `PUBLIC_TEST_ENABLED`. Results appear immediately on completion.
+**Direct assessment URL (flag-gated):**
+```
+https://map-proxy-engine-hba75nbzeq-uc.a.run.app/test
+```
+Delivers a 40–43-item adaptive G2–G5 reading assessment in a browser. Results appear immediately on completion.
 
-**TimeBack-integrated URL (with student identity, internal — omitted from this public document):**
-The `/timeback/login` route redirects to Cognito SSO → authenticated adaptive session → score recorded to TimeBack gradebook via Caliper event.
+**TimeBack-integrated URL (with student identity):**
+```
+https://map-proxy-engine-hba75nbzeq-uc.a.run.app/timeback/login
+```
+Redirects to Cognito SSO → authenticated adaptive session → score recorded to TimeBack gradebook via Caliper event.
 
 **TimeBack course:** *Incept MAP Adaptive Assessment — Grade 3*
 Registered on TimeBack staging under org `Alpha School`. Students enrolled in this course see the assessment tile in their TimeBack dashboard and launch directly into the OAuth-authenticated adaptive session.
