@@ -1,6 +1,6 @@
 ---
 name: map-proxy-brainlift
-description: The knowledge base a REVIEWER AGENT (e.g. an academics-team evaluating agent) loads to understand and evaluate the Incept MAP Proxy — an adaptive G2-G5 reading CAT designed to place students on the same ability continuum as NWEA MAP Growth Reading 2-5. Covers the instrument's defining feature of mastery, its BrainLift (the seven load-bearing Spiky POVs and their evidence), what is actually built and live-verified (v3 simulation suite, 2026-07-03), the case for approval (a Stage-2 feasibility pilot), the audit history (two adversarial audits + a teammate review, and every finding's disposition), the honest tradeoff logic (locked decisions vs. genuinely open forks vs. deliberately dropped approaches), and the full limitations/honest-ceiling disclosure. Use when a reviewer agent is asked to "review/evaluate the MAP proxy", "decide whether to approve the MAP proxy pilot", "judge the MAP proxy validity case", or needs full reasoning context (not a checklist) to make an informed, fair judgment. Self-contained: every number, source, and evidence tag needed to evaluate the case is embedded below — no external repo access assumed. Grounded in the Case for Approval, BrainLift, Audits & Fixes, and Limitations documents (all dated 2026-07-03) and NWEA's MAP Growth Technical Report for 2024-2025 / 2025 Norms.
+description: The knowledge base a REVIEWER AGENT (e.g. an academics-team evaluating agent) loads to understand and evaluate the Incept MAP Proxy — an adaptive G2-G5 reading CAT designed to place students on the same ability continuum as NWEA MAP Growth Reading 2-5. Covers the instrument's defining feature of mastery, its BrainLift (the seven load-bearing Spiky POVs and their evidence), what is actually built and live-verified (v3 simulation suite, 2026-07-03), the case for approval (a Stage-2 feasibility pilot), the audit history (two adversarial audits + a teammate review, and every finding's disposition), the honest tradeoff logic (locked decisions vs. genuinely open forks vs. deliberately dropped approaches), and the full limitations/honest-ceiling disclosure. Use when a reviewer agent is asked to "review/evaluate the MAP proxy", "decide whether to approve the MAP proxy pilot", "judge the MAP proxy validity case", or needs full reasoning context (not a checklist) to make an informed, fair judgment. The SKILL.md body is self-contained (every number and evidence tag needed for a normal review is embedded below); the full, unabridged source documents (BrainLift, Case for Approval, Audits & Fixes, Psychometric Design, Item Bank, Simulation Evidence, Concurrent Validity Plan, Limitations, Sources, and the master Validity Case) are bundled in references/ for deep technical dives — read them on demand, not by default. Grounded in documents dated 2026-07-03 and NWEA's MAP Growth Technical Report for 2024-2025 / 2025 Norms.
 ---
 
 # Incept MAP Proxy (G2–G5 Reading CAT) — reviewer knowledge base
@@ -20,6 +20,8 @@ You are a **reviewer agent** — for example, an academics-team evaluating agent
 | **[Open]** | Needs data that does not yet exist — the pilot or the concurrent-validity study |
 
 **Context that frames everything:** this is a **pre-pilot** instrument. No student has ever taken it and the real MAP in the same window. Three adversarial reviews (two independent audits plus a second teammate review — see §5) were run against the full documentation package before it reached an approver, and every finding was fixed or disclosed rather than argued away. The single most important discipline in this package: **the claims ladder is enforced in code, not prose** — RIT, percentile, and CGP output are blocked in the engine itself until a concurrent-validity study exists. A document can drift; a blocked API response cannot.
+
+**This SKILL.md is a curated distillation, not the only source.** Every claim below is condensed from a set of full source documents bundled alongside this skill in `references/` — the exact BrainLift, Case for Approval, Audits & Fixes, Psychometric Design, Item Bank, Simulation Evidence, Concurrent Validity Plan, Limitations, Sources, and master Validity Case tabs, verbatim except for two redactions (the internal approver's name and an internal deployment URL, both replaced with a generic description — no evidence, number, or disclosure was altered). Use this file for the reasoning and the verdict; open a specific reference file when you need an exact table, a full equation, a per-standard item count, or a direct quote to cite. See §8 for which reference answers which kind of question.
 
 ---
 
@@ -233,8 +235,24 @@ Before this package reached an approver, **two independent adversarial audits** 
 4. Use §5 to calibrate trust: this package has already been adversarially reviewed three times before reaching you. Spend your effort verifying the disclosed gaps are still disclosed, not re-discovering already-fixed problems.
 5. Run every design choice through §7; a locked decision is not up for debate, a genuinely open fork should be surfaced as such, and a dropped approach reappearing is itself a finding.
 6. Decide on the pilot ask, and name the one load-bearing seam (§7, last paragraph).
+7. If you need more than this summary provides — an exact equation, a full per-standard item-count table, the precise wording of a claim to quote, or a finding this file compressed away — open the matching file in `references/` (below). Don't re-derive numbers from memory when the primary document is one Read call away.
 
-**Sources** (full APA list in the source Sources document):
+**Bundled references** (verbatim source documents, dated 2026-07-03, two redactions noted in the callout above — read on demand, not by default):
+
+| File | Read this when you need... |
+|---|---|
+| `references/00_BRAINLIFT.md` | The full, unabridged BrainLift — every SPOV's exact wording, all DOK3 insights and DOK2 summaries, the complete locked-decisions/open-forks/dropped-approaches tables, and the Experts list |
+| `references/00_CASE_FOR_APPROVAL.md` | The full approval ask as written for the approver — exact pilot design commitments, the complete problem-statement tables (per-grade baselines), and the "will/won't claim" language verbatim |
+| `references/00_AUDITS_AND_FIXES.md` | Every one of the ~22 audit findings (not just the 16 condensed in §5) with full before/after text |
+| `references/01_PSYCHOMETRIC_DESIGN.md` | The actual Rasch/MLEF/PCM equations, engine code snippets, CAT termination-rule pseudocode, and the full constants table |
+| `references/02_ITEM_BANK.md` | Per-file bank composition, full format-distribution tables, the complete CCSS standard coverage matrix (all 4 grades), and the bank expansion priority queue |
+| `references/03_SIMULATION_EVIDENCE.md` | Full methodology for all 7 simulations, per-band tables, and the v1→v2→v3 progression in full detail |
+| `references/04_CONCURRENT_VALIDITY_PLAN.md` | The complete Stage 2/3/4 rollout design, sample-size formulas, counterbalancing design, and the pre-committed EBSR decision procedure in full |
+| `references/05_LIMITATIONS.md` | All 8 limitations with full statement/impact/mitigation text, and the complete known-vs-unknown table |
+| `references/06_SOURCES.md` | The full APA bibliography with per-source "used for" annotations and verification status |
+| `references/MAP_PROXY_VALIDITY_CASE.md` | The master investor/board-facing narrative — executive summary, competitive differentiation table, and the full UI/response-process-validity argument |
+
+**Sources** (full APA list in `references/06_SOURCES.md`):
 
 - NWEA (2026). *MAP Growth Technical Report for 2024–2025*. NWEA/HMH.
 - NWEA (2025). *2025 MAP Growth Norms*.
@@ -248,6 +266,5 @@ Before this package reached an approver, **two independent adversarial audits** 
 - AERA, APA, & NCME (2014). *Standards for Educational and Psychological Testing*.
 - Wise, S., & DeMars, C. (2005). Test-taker disengagement / rapid-guessing.
 - Black, P., & Wiliam, D. (1998); Kingston, N., & Nash, B. (2011). Formative/interim assessment effects.
-- The full validity package (BrainLift, Case for Approval, Audits & Fixes, Psychometric Design, Item Bank, Simulation Evidence, Concurrent Validity Plan, Limitations, Sources) — authoritative living copy in a shared Google Doc; static tabs mirrored in the `map-proxy-assessment` course repository.
-- v3 validation report (2026-07-03) — the authoritative simulation-validation source for every number in §3.
+- v3 validation report (2026-07-03) — the authoritative simulation-validation source for every number in §3; not bundled verbatim (it lives in the engine repository), but its results are fully captured in `references/03_SIMULATION_EVIDENCE.md`.
 - MAP® is a registered trademark of HMH Education Company / NWEA; this instrument is independent and not affiliated with or endorsed by NWEA.
