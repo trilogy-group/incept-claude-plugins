@@ -18,6 +18,13 @@
       "description": "Reviewer knowledge base for evaluating the Incept MAP Proxy (G2-G5 adaptive reading CAT) — defining feature of mastery, 7 SPOVs, v4 full-bank validation evidence (786 items), case for approval, audit history, 7 cross-source syntheses, and honest tradeoff logic vs. NWEA MAP Growth ground truth. Bundles the full source validity package as on-demand references.",
       "category": "education",
       "keywords": ["map-proxy", "nwea", "map-growth", "psychometrics", "brainlift"]
+    },
+    {
+      "name": "grade5-reading-brainlift",
+      "source": "./plugins/grade5-reading-brainlift",
+      "description": "Brief + operator manual for the live Grade-5 reading course EduLLM Grade 5 Reading (g5-reading-merged-pp-9802) on TimeBack PowerPath-100 — design argument, live build state, review frame, and operator recipes. Incomplete: the co-located references/ and scripts/ directories are not yet bundled.",
+      "category": "education",
+      "keywords": ["grade5", "reading", "timeback", "powerpath", "course-review", "brainlift", "operator-manual"]
     }
   ]
 }
