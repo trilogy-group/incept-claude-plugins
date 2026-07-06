@@ -1,7 +1,7 @@
 {
   "name": "map-proxy-brainlift",
-  "description": "Reviewer knowledge base for evaluating the Incept MAP Proxy (G2-G5 adaptive reading CAT) — defining feature of mastery, 7 SPOVs, v4 full-bank validation evidence (786 items), case for approval, audit history, and honest tradeoff logic vs. NWEA MAP Growth ground truth. Bundles the full source validity package (BrainLift, Case for Approval, Audits & Fixes, Psychometric Design, Item Bank, Simulation Evidence, Concurrent Validity Plan, Limitations, Sources) as on-demand references.",
-  "version": "3.0.0",
+  "description": "Reviewer knowledge base for evaluating the Incept MAP Proxy (G2-G5 adaptive reading CAT) — defining feature of mastery, 7 SPOVs, v4 full-bank validation evidence (786 items), case for approval, audit history, 7 cross-source syntheses, and honest tradeoff logic vs. NWEA MAP Growth ground truth. Bundles the full source validity package (BrainLift, Case for Approval, Audits & Fixes, Psychometric Design, Item Bank, Simulation Evidence, Concurrent Validity Plan, Limitations, Sources) as on-demand references.",
+  "version": "3.1.0",
   "author": {
     "name": "Incept"
   },
