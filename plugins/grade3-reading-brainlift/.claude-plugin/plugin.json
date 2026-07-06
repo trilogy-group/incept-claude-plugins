@@ -1,7 +1,7 @@
 {
   "name": "grade3-reading-brainlift",
-  "description": "Reviewer knowledge base for evaluating the live Grade-3 course reading-explorers-v2 — design, BrainLift, case for approval, and honest tradeoff logic.",
-  "version": "1.0.0",
+  "description": "Reviewer knowledge base for evaluating the live Grade-3 course reading-explorers-v2 — invariant ground-truth data, 7 SPOVs, 7 Insights, the reviewer's 11 findings with live-verified response, and 9 DOK-4 cross-source syntheses.",
+  "version": "2.0.0",
   "author": {
     "name": "Incept"
   },

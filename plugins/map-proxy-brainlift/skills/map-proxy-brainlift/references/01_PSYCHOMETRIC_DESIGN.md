@@ -97,7 +97,7 @@ Newton-Raphson update at iteration k:
 
 Convergence criterion: |θₖ₊₁ − θₖ| < 1×10⁻⁶ or 50 iterations exhausted.
 
-**Production solver (TimeBack parity, engine PR #26):** the shipped implementation is a *damped* Newton — each update step is clipped to a trust region of max_step = 1.0 logits — with 6-decimal rounding and the Abramowitz & Stegun 7.1.26 normal-CDF approximation, matching TimeBack's solver bit-for-bit. The v3 validation recorded 0 divergences in ~17,900 production-path sessions, and all 25 divergence regression tests pass against this solver.
+**Production solver (TimeBack parity, engine PR #26):** the shipped implementation is a *damped* Newton — each update step is clipped to a trust region of max_step = 1.0 logits — with 6-decimal rounding and the Abramowitz & Stegun 7.1.26 normal-CDF approximation, matching TimeBack's solver bit-for-bit. The v4 validation recorded 0 divergences in ~17,900 production-path sessions, and all 25 divergence regression tests pass against this solver.
 
 **Step 3 — Compute SE (administered items only, fence excluded).** The standard error is computed over the n administered items — not including the artificial fence items, which would artificially inflate precision:
 
@@ -246,7 +246,7 @@ if n >= ADAPTIVE_ITEMS_MIN and quotas_done and tei_floor_met \
 | Precision stop | ≥40 items AND quotas met AND TEI floor met AND SE ≤ 0.35 | 40 scored items is the floor before any stop; SE is evaluated only at ≥40 items |
 | Precision extension | items 41–43 when SE > 0.35 at the scored floor | Buys additional precision for hard-to-measure students before the cap |
 
-In the v3 validation, sessions averaged 40.6 items: 76.5% stopped at exactly 40 (SE ≤ 0.35 met at the scored floor), 15.1% ran to the 43-item hard cap, and no session stopped below 40.
+In the v4 validation, sessions averaged 40.6 items: 76.5% stopped at exactly 40 (SE ≤ 0.35 met at the scored floor), 15.1% ran to the 43-item hard cap, and no session stopped below 40.
 
 **Constants (TimeBack-parity values; pre-parity values shown for the record):**
 

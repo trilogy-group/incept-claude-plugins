@@ -12,7 +12,7 @@ A note on evidence. Every number in this document is drawn from one of five sour
 (1) live pulls of Alpha's MAP history from TimeBack's OneRoster API (1,844 G2–G5 Reading records; pulled 2026-06-17/25, re-pulled in full 2026-07-03) — labelled **Direct-pull**;
 (2) an independent whole-population analysis of the reporting database (`rpt2_map_scores`) that our own credentials cannot reach, corroborated by a second independent rpt2 analysis and our own coverage-bias decomposition — labelled **External-review** (full workup: the population-baseline analysis in the engine repository);
 (3) NWEA's own primary documents (*MAP Growth Technical Report for 2024–2025*; 2025 Norms) — labelled **NWEA-verified**;
-(4) seven Monte Carlo validation studies against the item bank (2026-07-03 v3 run: production selection path + randomesque selection, 650 items, G2–G5 prior, TimeBack-parity configuration; ~17,900 sessions) — labelled **Simulation**;
+(4) seven Monte Carlo validation studies against the item bank (2026-07-03 v4 run: production selection path + randomesque selection, full 786-item bank, G2–G5 prior, TimeBack-parity configuration; ~17,900 sessions) — labelled **Simulation**;
 (5) external peer-reviewed literature — labelled **Derived**.
 Where a claim needs data that does not yet exist (a concurrent MAP cohort), it is labelled **Open**. That discipline is deliberate — it is the same standard we are asking the instrument to be held to.
 
@@ -20,7 +20,7 @@ Where a claim needs data that does not yet exist (a concurrent MAP cohort), it i
 
 Approve the Incept MAP Proxy for a Stage-2 feasibility pilot (**~40 students, 1–2 classes**, G2–G5, one ~45-minute adaptive session each), and approve in principle a Stage-3 linking study in which students take the proxy within two weeks of their official Fall 2026 MAP sitting — the N≥1,000 paired-score cohort accruing through regular use inside Alpha's existing MAP calendar, not a separate recruitment.
 
-The pilot is deliberately small, and we are honest about what that size can and cannot do. ~40 students × ~40 items is roughly 1,600 responses against a 766-item bank — nowhere near the ~200 responses per item that calibration requires — so the pilot claims no calibration. Its job is feasibility: completion rate, session duration, rapid-guess rates, teacher and student experience, and early item red flags from response patterns. Calibration then accrues from regular use — ongoing sessions accumulate toward the calibration thresholds (a ~300-student-equivalent response volume for the core band) — and the linking study reads out at the Fall 2026 MAP window once the paired cohort has accrued. The ladder is: pilot (~40, feasibility) → calibration via accumulated regular use → linking at the Fall 2026 window.
+The pilot is deliberately small, and we are honest about what that size can and cannot do. ~40 students × ~40 items is roughly 1,600 responses against a 786-item bank — nowhere near the ~200 responses per item that calibration requires — so the pilot claims no calibration. Its job is feasibility: completion rate, session duration, rapid-guess rates, teacher and student experience, and early item red flags from response patterns. Calibration then accrues from regular use — ongoing sessions accumulate toward the calibration thresholds (a ~300-student-equivalent response volume for the core band) — and the linking study reads out at the Fall 2026 MAP window once the paired cohort has accrued. The ladder is: pilot (~40, feasibility) → calibration via accumulated regular use → linking at the Fall 2026 window.
 
 The case rests on three things, in order:
 1. Alpha's current population sits near the 46th percentile with a real low tail, its growth signal is invisible between MAP windows — measurably, not rhetorically — and the only interim standardized instrument in the platform is effectively unused.
@@ -37,7 +37,7 @@ We are not asking you to approve a RIT-equivalence claim. We have no paired prox
 
 The honest per-grade baseline (our reachable OneRoster views, with the External-review population figure where it exists):
 
-| Grade | OneRoster slice, latest/student | Current cohort (SY 2025-26) | Slice mean percentile | Full population (External-review) | Which tail binds (bank ~RIT 155–235) |
+| Grade | OneRoster slice, latest/student | Current cohort (SY 2025-26) | Slice mean percentile | Full population (External-review) | Which tail binds (bank ~RIT 155–250) |
 | :---- | :---- | :---- | :---- | :---- | :---- |
 | G2 | 194.8 (n=176) | 185.5 (n=60) | ~74 | — | **Floor** — only grade with a visible below-155 tail; rpt2 shows the bottom-quartile G2 mean at RIT 156.6, exactly at the new floor |
 | G3 | 207.4 (n=173) | 198.3 (n=42) | ~74 | **196.0, 46th pctile (n=915)** | **Floor** — weakly on our slice, decisively on the true population (mean percentile 46 implies a fat low tail our slice never sees) |
@@ -73,7 +73,7 @@ A complete, MAP-design-aligned adaptive assessment, live in TimeBack staging:
 | Artifact | Count / status | Note |
 | :---- | :---- | :---- |
 | Adaptive engine | Live (Cloud Run) | Fisher-information CAT with domain quotas; Rasch 1PL; MLEF scoring with the 3.8-logit fence (NWEA-verified design) |
-| Items | 650 operational | 13 bank files, G2–G5 band labels, provisional difficulties spanning ≈ RIT 175–220 — the bank the v3 validation ran against; staged expansions below |
+| Items | 650 operational (786 harness-loadable) | 13 bank files, G2–G5 band labels, provisional difficulties spanning ≈ RIT 175–220 in the operational core; the authoritative v4 validation ran against the full 786-item bank (staged expansions below) |
 | Item formats | 6 | See section 5 |
 | Quality gate | 14 dimensions | Every item passed a 14-dimension quality check with a ≥0.85 pass threshold before entering the bank: text-dependence ablation, CCSS alignment, near-neighbor distractors, Lexile-to-band matching |
 | CCSS coverage | 50+ standards | RL / RI / L strands, G2–G5 |
@@ -82,7 +82,7 @@ A complete, MAP-design-aligned adaptive assessment, live in TimeBack staging:
 | TimeBack integration | Live (staging) | Cognito SSO login; scores written to the gradebook via Caliper events; course *Incept MAP Adaptive Assessment — Grade 3* registered under Alpha School |
 | Score output | Logit ± SE only | RIT output is code-blocked until scale linking (deliberate); the reported SE is b-uncertainty-adjusted (see §7) |
 
-**Bank status — both tails, stated plainly.** The operational bank is 650 items — that is what the v3 validation ran against. Staged expansions are now merged and harness-loadable: +92 edge items (PR #30; floor to ~RIT 155, ceiling to 235) and +44 items (PR #35, all CI green: 26 standard-gap items closing nine under-target standards, plus 18 G5 super-ceiling items at RIT 231–250 — directly answering the ~20%-of-G5-above-235 finding in §2). Total: **766 items harness-loadable**, difficulty b −4.45 → +4.55 ≈ RIT 155–245; adoption into the production bank remains a reviewable decision pending calibration. Students below RIT 155 route to the official K–2 MAP instrument — we own that boundary explicitly rather than stretching the proxy past its floor.
+**Bank status — both tails, stated plainly.** The operational bank is 650 items. Staged expansions are now merged and harness-loadable: +92 edge items (PR #30; floor to ~RIT 155, ceiling to 235) and +44 items (PR #35, all CI green: 26 standard-gap items closing nine under-target standards, plus 18 G5 super-ceiling items at RIT 231–250 — directly answering the ~20%-of-G5-above-235 finding in §2). Total: **786 items harness-loadable** (the `load_bank()` build dedups to 786 unique items, which differs from the naive fixture sum), difficulty b −4.45 → +4.55 ≈ RIT 155–250 — and this full 786-item bank is what the authoritative v4 validation ran against; adoption into the production bank remains a reviewable decision pending calibration. Students below RIT 155 route to the official K–2 MAP instrument — we own that boundary explicitly rather than stretching the proxy past its floor.
 
 ## 5. Item-format breadth (live)
 
@@ -105,7 +105,7 @@ Stated plainly: NWEA's Technical Report confirms three of these six formats in R
 
 | Incumbent gap | What the proxy does | Evidence |
 | :---- | :---- | :---- |
-| No RIT-scale signal between MAP windows | 40–43-item adaptive session, immediate logit score ± SE, any modern browser | Live deployment; Simulation 1 (r = 0.963 ability recovery, v3) |
+| No RIT-scale signal between MAP windows | 40–43-item adaptive session, immediate logit score ± SE, any modern browser | Live deployment; Simulation 1 (r = 0.967 ability recovery, v4) |
 | No domain diagnosis | Literary / Informational / Vocabulary sub-scores every session — the domains Alpha's MAP data says matter (Informational weakest at G2 and G3) | Direct-pull + live score report |
 | One format (100% MCQ) | Six formats under MAP's interaction rules — forward-only, answer-before-advance, untimed | Live; section 5 |
 | Fixed form, gameable by repetition | Adaptive selection with domain quotas, topic caps, and randomesque exposure control; pool ratio stated both ways — 650/40 = 16.3× session length; vs Stocking's recommended 10× floor (400 items) = 1.6×; staged expansions raise the pool further (see the Item Bank tab) | Simulation 5 (blueprint held in 100% of sessions, ±1) |
@@ -116,26 +116,26 @@ Stated plainly: NWEA's Technical Report confirms three of these six formats in R
 
 ## 7. Simulation evidence and benchmarks
 
-Seven Monte Carlo studies. Provenance: 2026-07-03 v3 run — production selection path + randomesque selection, 650 items, G2–G5 prior, TimeBack-parity configuration (14/13/13 = 40 scored, hard cap 43, SE stop 0.35, TEI floor ≥12); ~17,900 sessions; authoritative source: the v3 validation report in the engine repository. Misses included (Simulation):
+Seven Monte Carlo studies. Provenance: 2026-07-03 v4 run — production selection path + randomesque selection, full 786-item bank, G2–G5 prior, TimeBack-parity configuration (14/13/13 = 40 scored, hard cap 43, SE stop 0.35, TEI floor ≥12); ~17,900 sessions; authoritative source: the v4 validation report in the engine repository. Misses included (Simulation):
 
-| Metric | Result (v3) | Reference point | In plain terms | Status |
+| Metric | Result (v4) | Reference point | In plain terms | Status |
 | :---- | :---- | :---- | :---- | :---- |
-| Ability recovery (r with true ability) | 0.963 | ≥ 0.90 | Does the test rank stronger readers above weaker ones? | Meets |
-| RMSE | 3.44 RIT | < 4.0 RIT | How far off is the score from the truth, on average? | Meets |
-| Systematic bias | −0.38 RIT (reliable-range −0.27; max per-band 0.83) | \|bias\| < 0.5 overall; ≤ 1.5 per band | Does the test systematically score too high or too low? | Meets |
-| SEM (core band) | 3.18 RIT | ≤ 4.0 RIT (MAP published CSEM ≈ 3.3–3.6) | How precise is one session's score? | Meets |
-| Marginal reliability (core range) | 0.929 | ≥ 0.93 target; MAP published: 0.96 | Would a retake give a similar score? | **0.001 short — pre-calibration; empirical calibration is the closer** |
+| Ability recovery (r with true ability) | 0.967 | ≥ 0.90 | Does the test rank stronger readers above weaker ones? | Meets |
+| RMSE | 3.20 RIT | < 4.0 RIT | How far off is the score from the truth, on average? | Meets |
+| Systematic bias | −0.04 RIT (reliable-range −0.04; max per-band 0.83) | abs(bias) < 0.5 overall; ≤ 1.5 per band | Does the test systematically score too high or too low? | Meets — near-eliminated on the full bank |
+| SEM (core band) | 3.14 RIT | ≤ 4.0 RIT (MAP published CSEM ≈ 3.3–3.6) | How precise is one session's score? | Meets |
+| Marginal reliability (core range) | 0.931 | ≥ 0.93 target; MAP published: 0.96 | Would a retake give a similar score? | **Meets the 0.93 target (0.931); MAP's 0.96 is the higher operational bar** |
 | Blueprint adherence | 100% of sessions (±1 vs 14/13/13 on the 40-item scored form) | 100% | Does every session deliver the right mix of reading domains? | Meets |
 | TEI floor | 100% of sessions ≥ 12 TE items (mean 16.2, gap-match counted) | 100% | Does every session include enough interactive (beyond-MCQ) items? | Meets |
-| Internal cross-bank consistency (synthetic — NOT MAP agreement) | r 0.912; 95% LoA [−10.7, +10.2] RIT | r ≥ 0.85 | Does the engine score the same student consistently on a different item set? | Meets, with synthetic-bank caveats |
+| Internal cross-bank consistency (synthetic — NOT MAP agreement) | r 0.918; 95% LoA [−10.0, +10.0] RIT | r ≥ 0.85 | Does the engine score the same student consistently on a different item set? | Meets, with synthetic-bank caveats |
 | Parameter-error robustness | reliability ≥ 0.915 at σ ≤ 1.0 logits | ≥ 0.85 | Does it still work when our difficulty estimates are imperfect? | Meets |
 | MLEF divergences | 0 in ~17,900 sessions | 0 | Does scoring ever break on extreme answer patterns? | Meets |
-| Reliable range | RIT 181–227 | G3–G5 + above-average G2 | Across which ability range can we trust the score? | Scoped honestly (G2 floor gap disclosed; floor expansion staged) |
+| Reliable range | RIT 160–230 | G3–G5 + G4/G5 ceiling + median-and-above G2 | Across which ability range can we trust the score? | Median G2 fall reader (~RIT 170) now inside the reliable range; only the bottom ~5% (below RIT 160) route to K–2 MAP |
 | Session length | mean 40.6 items; 76.5% stop at 40, 15.1% reach the 43 cap | 40–43 | Do sessions stay within MAP's 40–43-item structure? | Meets |
 
-The path to these numbers is part of the evidence, and we report it rather than the final table alone. The first production-path run (v1, 2026-07-02) regressed RMSE to 4.73 and surfaced a +2.62 RIT systematic overestimate — we published both. The root cause was then isolated (v2): the +2.62 lived in the Owen running estimate's prior shrinkage, not in the shipped score; re-basing the final score on the score report's MLEF value removed it (bias −0.46, RMSE 3.70). The v3 run re-validates everything under the TimeBack-parity constants adopted in engine PRs #26/#34 (14/13/13, 40 scored, SE 0.35, TEI ≥12) with randomesque exposure control: RMSE 3.44, bias −0.38, zero MLEF divergences. Remaining open items, stated plainly: a residual −0.4 to −1.0 RIT negative bias in the RIT 175–190 bands awaits a scorer-only decomposition; 38/650 items are over-exposed (>30%) and 241/650 never used (v1: 322 — improved by randomesque selection, exposure-aware scoring still queued); and two easy-band cells remain never-served by selection.
+The path to these numbers is part of the evidence, and we report it rather than the final table alone. The first production-path run (v1, 2026-07-02) regressed RMSE to 4.73 and surfaced a +2.62 RIT systematic overestimate — we published both. The root cause was then isolated (v2): the +2.62 lived in the Owen running estimate's prior shrinkage, not in the shipped score; re-basing the final score on the score report's MLEF value removed it (bias −0.46, RMSE 3.70). The v3 run re-validated everything under the TimeBack-parity constants adopted in engine PRs #26/#34 (14/13/13, 40 scored, SE 0.35, TEI ≥12) with randomesque exposure control on the 650-item bank (RMSE 3.44, bias −0.38). The authoritative v4 run then re-ran the identical validation on the full 786-item bank (after the floor/ceiling/standard-gap expansions merged): RMSE 3.20, bias −0.04 (near-eliminated), zero MLEF divergences. Remaining open items, stated plainly: the 171–180 selection cells improved but are not yet fully served; 38 items are over-exposed (>30%) and 289 never used (never-used rose with the larger bank — per-band exposure balancing is the open follow-up).
 
-One honesty instrument shipped with the score report itself: because provisional b values understate true score uncertainty, reports emit a **b-uncertainty-adjusted SE** — the Fisher SE inflated by the current validation run's RMSE/SEM ratio (1.08 under v3) — with an explicit `se_basis` field naming the adjustment; it is removed automatically once empirical calibration lands (engine PR #33).
+One honesty instrument shipped with the score report itself: because provisional b values understate true score uncertainty, reports emit a **b-uncertainty-adjusted SE** — the Fisher SE inflated by the current validation run's RMSE/SEM ratio (1.02 under v4) — with an explicit `se_basis` field naming the adjustment; it is removed automatically once empirical calibration lands (engine PR #33).
 
 ## 8. The BrainLift — the thinking behind the instrument
 
@@ -152,19 +152,19 @@ Every psychometric result in this package is either design parity (verified agai
 Live and verifiable today:
 • 650-item operational bank (13 files, counted programmatically), 6 formats, 14-dimension quality gate.
 • Adaptive engine live on Cloud Run under the TimeBack-parity configuration (14/13/13 = 40 scored, cap 43, SE stop 0.35, TEI floor ≥12); TimeBack staging course with SSO and Caliper gradebook writes.
-• Seven simulation studies validated under the parity configuration (v3, 2026-07-03): all green criteria met; reliability 0.929 vs the 0.93 target is the one reported gap (≈0.001).
-• The v1 +2.62 RIT bias root-caused (Owen running-estimate prior shrinkage) and resolved by re-basing the final score on the shipped MLEF value (v2), re-confirmed under v3 (bias −0.38).
-• Randomesque exposure control in both selection phases — the deterministic-first-passage finding is fixed (never-used items down from 322 to 241).
-• RIT output blocked in code; score reports show logit ± b-uncertainty-adjusted SE (×1.08, `se_basis`-labelled; engine PR #33) and domain sub-scores with a "not a RIT score" label.
+• Seven simulation studies validated under the parity configuration on the full 786-item bank (v4, 2026-07-03): all green criteria met, including marginal reliability 0.931 — now meeting the ≥0.93 target (MAP's published 0.96 remains the higher operational bar).
+• The v1 +2.62 RIT bias root-caused (Owen running-estimate prior shrinkage) and resolved by re-basing the final score on the shipped MLEF value (v2); overall bias fell to −0.04 RIT on the full bank under v4 (near-eliminated).
+• Randomesque exposure control in both selection phases — the deterministic-first-passage finding is fixed; never-used items are 289 on the full 786-item bank (they rose with the larger bank; per-band exposure balancing is the open follow-up).
+• RIT output blocked in code; score reports show logit ± b-uncertainty-adjusted SE (×1.02, `se_basis`-labelled; engine PR #33) and domain sub-scores with a "not a RIT score" label.
 • Two adversarial audits plus a second teammate review run; all findings fixed or disclosed (full scorecard in the Audits & Fixes tab).
 • Public /test route gated behind a flag so the item bank cannot be farmed anonymously.
-• Staged bank expansions merged: +92 edge items (PR #30) and +44 items (PR #35: 26 standard-gap closing nine under-target standards + 18 G5 super-ceiling at RIT 231–250; 26/26 and 18/18 passed quality checks after re-authoring, min 0.950) — **766 items harness-loadable**, ≈ RIT 155–245; production adoption a reviewable decision pending calibration.
+• Staged bank expansions merged: +92 edge items (PR #30) and +44 items (PR #35: 26 standard-gap closing nine under-target standards + 18 G5 super-ceiling at RIT 231–250; 26/26 and 18/18 passed quality checks after re-authoring, min 0.950) — **786 items harness-loadable** (the `load_bank()` build dedups to 786 unique items), ≈ RIT 155–250; production adoption a reviewable decision pending calibration.
 • EBSR dual-scoring comparator built and wired for the pilot (engine PR #33).
 
 In flight / proposed (engineering-confirmed, not yet complete):
 • Insight features in development (will be available): per-domain student reports in plain language, growth-velocity tracking, growth-vs-similar-peers comparison for teachers, engagement flags, and a teacher class heatmap — all pre-linking-safe by design.
-• Scorer-only decomposition of the residual −0.4 to −1.0 RIT negative bias in the RIT 175–190 bands.
-• Exposure-aware scoring (38/650 items over 30% exposure; two easy-band cells never served).
+• Per-band exposure balancing: never-used items rose to 289 with the larger 786-item bank, and 38 items exceed 30% exposure — exposure-aware scoring is the open follow-up.
+• Full service of the 171–180 selection cells — improved under v4 but not yet fully served.
 • A per-standard session cap (max 2 items/standard/session) to mitigate over-concentrated standards — proposed in PR #35, not shipped.
 
 Open (needs the pilot / external action):
@@ -174,11 +174,11 @@ Open (needs the pilot / external action):
 
 ## 11. What we will and won't claim
 
-• We will claim: the measurement design matches MAP's published design, verified against NWEA primary sources (with the 14/13/13 operational split disclosed as TimeBack's, consistent with NWEA's published 40–43 structure); the adaptive engine passes its v3 simulation suite with one disclosed gap (reliability 0.929 vs the 0.93 target); the instrument is live, integrated, and pilot-ready; and Alpha's own MAP data — re-baselined to the full population — shows exactly the growth-velocity blind spot an interim instrument addresses.
+• We will claim: the measurement design matches MAP's published design, verified against NWEA primary sources (with the 14/13/13 operational split disclosed as TimeBack's, consistent with NWEA's published 40–43 structure); the adaptive engine passes its v4 simulation suite on the full 786-item bank, meeting the ≥0.93 reliability target (0.931; MAP's 0.96 remains the higher operational bar); the instrument is live, integrated, and pilot-ready; and Alpha's own MAP data — re-baselined to the full population — shows exactly the growth-velocity blind spot an interim instrument addresses.
 • We will not claim: that a proxy score equals a MAP score (Open — that is the linking study's job); that simulated reliability is operational reliability; a RIT gain, a growth multiple, or "proven." The engine enforces the first of these by refusing to emit RIT.
 
 ## 12. The ask, restated
 
 Approve the ~40-student feasibility pilot (1–2 classes) and schedule the Stage-3 linking window at the Fall 2026 MAP sitting. The design is right and verified; the engine is live and integrated; the documentation has survived adversarial audit; the claims are enforced in code, not just prose. Approving the pilot starts the ladder that turns a demonstrably-right instrument into a proven one: real students first, calibration accruing from regular use, and real paired MAP data — collected inside a testing calendar Alpha already runs.
 
-*Prepared from live TimeBack OneRoster pulls (2026-06-17/25, full re-pull 2026-07-03), the external-review population baseline (the population-baseline analysis in the engine repository), the NWEA MAP Growth Technical Report for 2024–2025 and 2025 Norms, seven Monte Carlo validation studies (v3 run, 2026-07-03, TimeBack-parity configuration; the v3 validation report in the engine repository), two adversarial documentation audits (2026-07-02), and a second teammate review (2026-07-02). Full evidence package: the Validity Case tab and its companion tabs. MAP® is a registered trademark of HMH Education Company / NWEA; this instrument is independent and not affiliated with or endorsed by NWEA.*
+*Prepared from live TimeBack OneRoster pulls (2026-06-17/25, full re-pull 2026-07-03), the external-review population baseline (the population-baseline analysis in the engine repository), the NWEA MAP Growth Technical Report for 2024–2025 and 2025 Norms, seven Monte Carlo validation studies (v4 run, 2026-07-03, TimeBack-parity configuration, full 786-item bank; the v4 validation report in the engine repository), two adversarial documentation audits (2026-07-02), and a second teammate review (2026-07-02). Full evidence package: the Validity Case tab and its companion tabs. MAP® is a registered trademark of HMH Education Company / NWEA; this instrument is independent and not affiliated with or endorsed by NWEA.*

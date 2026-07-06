@@ -127,9 +127,9 @@ Incept-MAP-proxy team. (2026). *Grade 3 Reading — MAP Growth Equivalent Examin
 *Used for:* Historical fixed-form design context; G3-specific norm values; domain quota rationale; distractor taxonomy.
 
 **[VALIDATION-REPORT]**
-Incept-MAP-proxy team. (2026). *MAP Engine Psychometric Validation Report v3 — TimeBack-Parity Configuration* (2026-07-03). The v3 validation report in the engine repository. **Authoritative.**
+Incept-MAP-proxy team. (2026). *MAP Engine Psychometric Validation Report v4 — Full 786-Item Bank* (2026-07-03). The v4 validation report in the engine repository. **Authoritative.**
 *Used for:* All seven simulation results; exact numeric values for r, RMSE, bias, reliability, SEM, LoA, blueprint adherence, TEI floor audit, exposure, session-length distribution, and floor/ceiling characterization.
-Historical records (superseded, retained for the audit trail, all in the engine repository): the v2 re-based run report (2026-07-02), the v1 production-path re-run report (2026-07-02), and the initial G3-scoped run report (2026-06-25).
+Historical records (superseded, retained for the audit trail, all in the engine repository): the v3 TimeBack-parity run report on the 650-item bank (2026-07-03), the v2 re-based run report (2026-07-02), the v1 production-path re-run report (2026-07-02), and the initial G3-scoped run report (2026-06-25).
 
 **[MAP-POPULATION-BASELINE]**
 Incept-MAP-proxy team. (2026). *MAP Reading Population Baseline — Grades 2–5* (2026-07-03). The population-baseline analysis in the engine repository (research/oneroster-map).

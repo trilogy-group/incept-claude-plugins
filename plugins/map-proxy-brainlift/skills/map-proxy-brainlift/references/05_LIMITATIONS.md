@@ -1,5 +1,5 @@
 # Limitations — MAP Proxy Adaptive Assessment
-**Version:** 2.0 | **Date:** 2026-07-03 (v3 TimeBack-parity validation) | **Audience:** All (especially due-diligence reviewers)
+**Version:** 2.0 | **Date:** 2026-07-03 (v4 full-bank validation) | **Audience:** All (especially due-diligence reviewers)
 
 This document provides a complete, honest disclosure of all known limitations of the Incept MAP Proxy. Its purpose is to make the investor case credible by demonstrating that we understand what we don't know. Every limitation includes: the limitation statement, its practical impact, and the mitigation plan.
 
@@ -13,23 +13,23 @@ All 650 items in the bank carry provisional difficulty parameters (b_provisional
 ### Practical impact
 Item selection uses b_provisional values to compute Fisher information. If an item's true difficulty is 5–10 RIT harder than its provisional value, the CAT will select it for students at a lower ability level than appropriate — wasting an item slot on a near-ceiling item instead of an informative one. This reduces measurement precision. Simulation 3 shows the engine tolerates this at the expected σ ≈ 0.5–1.0 logits level (reliability ≥ 0.85 maintained) [SIMULATION], but precision is below what it will be post-calibration.
 
-**Quantitative impact:** RMSE under the v3 run (2026-07-03) is 3.44 RIT — within the <4.0 target — and is expected to improve further toward ~3.0 RIT after N=1,000 empirical calibration. Reliability is expected to rise from 0.929 to ≥ 0.93 [DERIVED; based on Sim 3 results and calibration literature]. Meanwhile, because provisional b values understate score uncertainty, **score reports emit a b-uncertainty-adjusted SE** — the Fisher SE inflated by the current validation run's RMSE/SEM ratio (1.08 under v3) — with an explicit `se_basis` field; the inflation is removed automatically once empirical calibration lands (engine PR #33).
+**Quantitative impact:** RMSE under the authoritative v4 full-bank run (2026-07-03) is 3.20 RIT — within the <4.0 target — and is expected to improve further toward ~3.0 RIT after N=1,000 empirical calibration. Marginal reliability is 0.931, already meeting the ≥0.93 target; empirical calibration is expected to close the remaining distance to MAP's published 0.96 operational bar [DERIVED; based on Sim 3 results and calibration literature]. Meanwhile, because provisional b values understate score uncertainty, **score reports emit a b-uncertainty-adjusted SE** — the Fisher SE inflated by the current validation run's RMSE/SEM ratio (1.02 under v4) — with an explicit `se_basis` field; the inflation is removed automatically once empirical calibration lands (engine PR #33).
 
 ### Mitigation
 Field trial (N ≥ 1,000 students): Rasch-calibrate all items. Items with INFIT > 1.30 or point-biserial < 0.20 are retired or revised. Core-band items (RIT 185–210) will achieve SE(b̂) ≤ 0.30 logits (3 RIT) — the operational calibration target [Wright-Stone-1979; Linacre-1994]. Timeline: 6–12 months with school partnership.
 
 ---
 
-## Limitation 2: A Residual Band-Level Negative Bias Remains, and the Reported SE Requires Inflation Pre-Calibration
+## Limitation 2: The Systematic Bias Is Near-Eliminated on the Full Bank; the Reported SE Still Requires Modest Inflation Pre-Calibration
 
 ### Statement
-The v1 production-path re-run (2026-07-02) flagged RMSE 4.73 RIT and a **+2.62 RIT systematic overestimate** — we reported the regression rather than the earlier, prettier number. Both were subsequently root-caused and resolved: the bias lived in the **Owen running estimate's prior shrinkage**, not in the shipped score, and re-basing the final score on the score report's MLEF `overall_logit` (v2) removed it. Under the authoritative v3 run (2026-07-03, TimeBack-parity configuration), RMSE is **3.44 RIT** (within the <4.0 target) and overall bias is **−0.38 RIT** (reliable-range −0.27; max per-band 0.83 — all within criteria). What remains: a **residual negative bias of −0.4 to −1.0 RIT in the RIT 175–190 bands** (largest −1.04 at 175–180, below the reliable floor), and marginal reliability of 0.929 vs the ≥0.93 target (≈0.001 gap).
+The v1 production-path re-run (2026-07-02) flagged RMSE 4.73 RIT and a **+2.62 RIT systematic overestimate** — we reported the regression rather than the earlier, prettier number. Both were subsequently root-caused and resolved: the bias lived in the **Owen running estimate's prior shrinkage**, not in the shipped score, and re-basing the final score on the score report's MLEF `overall_logit` (v2) removed it. The interim v3 run on the 650-item bank measured overall bias −0.38 RIT; the authoritative **v4 full-bank run (2026-07-03)** re-validated on the full 786-item bank and the residual bias is now **near-eliminated: overall bias −0.04 RIT** (reliable-range −0.04; max per-band 0.83 — all within criteria), RMSE **3.20 RIT**. The below-floor tail improved markedly with the merged floor items: below-floor bias fell to **−0.14 RIT** (from −0.45 at v3) and below-floor RMSE to **3.32 RIT** (from 4.18). Marginal reliability of 0.931 now meets the ≥0.93 target.
 
 ### Practical impact
-Students in the 175–190 bands read slightly low on average pre-calibration; for a student near a policy threshold in those bands, this could misclassify in the *conservative* direction. Core-band precision meets targets (SEM 3.18 RIT, reliability 0.929). Because provisional b values understate uncertainty, the plain Fisher SE would read too tight — so **score reports emit a b-uncertainty-adjusted SE** (Fisher SE × RMSE/SEM ratio = 1.08 under v3) with an explicit `se_basis` field naming the adjustment [engine PR #33]. The adjustment is removed automatically post-calibration.
+The systematic bias that earlier drafts flagged is no longer material: on the full bank the overall and reliable-range bias are both −0.04 RIT. Core-band precision meets targets (SEM 3.14 RIT, reliability 0.931). Because provisional b values still understate uncertainty pre-calibration, the plain Fisher SE would read slightly too tight — so **score reports emit a b-uncertainty-adjusted SE** (Fisher SE × RMSE/SEM ratio = 1.02 under v4) with an explicit `se_basis` field naming the adjustment [engine PR #33]. The adjustment is removed automatically post-calibration.
 
 ### Mitigation
-A scorer-only decomposition (S12) of the residual 175–190-band bias is the queued follow-up. Empirical calibration — accrued through regular use toward a ~300-student-equivalent response volume for the core band — replaces the expert-assigned b values that drive both the residual bias and the reliability gap. The plan is designed to resolve this; simulation supports but cannot guarantee it.
+Empirical calibration — accrued through regular use toward a ~300-student-equivalent response volume for the core band — replaces the expert-assigned b values that drive the small remaining SE inflation and the distance to MAP's 0.96 operational reliability. The plan is designed to close this; simulation supports but cannot guarantee it.
 
 ---
 
@@ -55,14 +55,14 @@ Stage 3 concurrent validity study (N ≥ 1,000 paired sessions accrued through r
 ## Limitation 4: No Concurrent Validity Data
 
 ### Statement
-We have not yet administered our test and the real MAP to the same students. The [−10.7, +10.2] RIT 95% Limits of Agreement from Simulation 4 — relabelled **internal cross-bank consistency (synthetic)**, because that is what it measures — is based on a synthetic MAP-like bank, not actual NWEA items, and carries disclosed caveats (format relabelling to satisfy the TEI floor; the synthetic bank's quota fit) [SIMULATION].
+We have not yet administered our test and the real MAP to the same students. The [−10.0, +10.0] RIT 95% Limits of Agreement from Simulation 4 — relabelled **internal cross-bank consistency (synthetic)**, because that is what it measures — is based on a synthetic MAP-like bank, not actual NWEA items, and carries disclosed caveats (format relabelling to satisfy the TEI floor; the synthetic bank's quota fit) [SIMULATION].
 
 ### Practical impact
-We cannot currently claim "a student who scores X on our test would score X on MAP." This is the fundamental commercial claim the product depends on, and it is not yet proven. The v3 consistency result (r=0.912, LoA [−10.7, +10.2] RIT) is an engine consistency check — explicitly not MAP agreement evidence.
+We cannot currently claim "a student who scores X on our test would score X on MAP." This is the fundamental commercial claim the product depends on, and it is not yet proven. The v4 consistency result (r=0.918, LoA [−10.0, +10.0] RIT) is an engine consistency check — explicitly not MAP agreement evidence.
 
 **What we can claim pre-pilot:**
-- The algorithm correctly ranks students by reading ability (r=0.963, v3 run) [SIMULATION]
-- The test is reliable at the core ability range (rel=0.929) [SIMULATION]
+- The algorithm correctly ranks students by reading ability (r=0.967, v4 run) [SIMULATION]
+- The test is reliable at the core ability range (rel=0.931, meets the ≥0.93 target) [SIMULATION]
 - The blueprint is consistent with MAP's published 40–43 structure (14/13/13 TimeBack operational split, disclosed) [AUTHORING-DECISION; NWEA-VERIFIED for 40–43]
 - Items have passed a 14-dimension quality gate [AUTHORING-DECISION]
 
@@ -77,10 +77,10 @@ Same as Limitation 3: concurrent validity study. Target: r ≥ 0.80, mean differ
 Grade 2 items (161–180 band) have the fewest items in the bank (51 items in the 161–170 band, 45 in 171–180) and the least validated b_provisional values. G2 vocabulary standards L.2.4 and L.2.5 each have only 3 items after gap fixes. Some G2 match/sequence items underwent limited quality-check validation during a quality-check service outage in June 2026.
 
 ### Practical impact
-G2 students at or below the 50th percentile (RIT < 170) may receive less accurate ability estimates due to bank thinness in that region. The reliable range identified in Simulation 6 begins at RIT 181 — below this, reliability degrades toward 0.85 [SIMULATION]. G2 students at the 8th–25th percentile may receive scores that are directionally correct but less precise.
+The floor is now **largely closed**: with the merged floor items validated on the full 786-item bank, the v4 reliable range reaches down to **RIT 160**, so the median G2 fall reader (~RIT 170) is inside the reliable range. Only the bottom ~5% of readers (below RIT 160) fall below the floor. G2 students in that lowest band may still receive scores that are directionally correct but less precise, and they route to the K–2 instrument.
 
 ### Mitigation
-The floor expansion is now **merged** (+92 edge items, PR #30 — floor to ~RIT 155), harness-validated and pending calibration/adoption into the operational bank; the v3 reliable floor of RIT 181 will be re-characterized once adopted. Students below RIT 155 route to the official K–2 MAP instrument — an explicit boundary, not a stretched proxy. Tail-band calibration is protected by the pre-committed tail coverage plan: the ~40-student pilot deliberately includes both tails, and the ≥150-responses-per-tail-band-item target attaches to the calibration stage that accrues from regular use (the Concurrent Validity Plan tab, §2.2). All G2 items generated during the outage window should be re-validated once the quality-check service is restored.
+The floor expansion is **merged and validated on the full bank** (+92 edge items, PR #30 — floor to ~RIT 155): the v4 run confirms the reliable floor at RIT 160, and below-floor RMSE improved to 3.32 RIT (from 4.18 at v3). Students below RIT 155/160 route to the official K–2 MAP instrument — an explicit boundary, not a stretched proxy, but one that now catches only a small tail rather than the whole below-median G2 group. Tail-band calibration is protected by the pre-committed tail coverage plan: the ~40-student pilot deliberately includes both tails, and the ≥150-responses-per-tail-band-item target attaches to the calibration stage that accrues from regular use (the Concurrent Validity Plan tab, §2.2). All G2 items generated during the outage window should be re-validated once the quality-check service is restored.
 
 ---
 
@@ -94,7 +94,7 @@ All simulations assume the Rasch 1PL model correctly describes student-item inte
 - **Fatigue:** Later items may be systematically harder due to test-taker fatigue — not modeled
 
 ### Practical impact
-If the Rasch model is misspecified, all simulation results — including the r=0.963 theta recovery and rel=0.929 reliability — overestimate actual field performance. The standard Rasch model fit indices (INFIT mean square 0.70–1.30; OUTFIT < 2.0; pt-biserial > 0.20) will identify items where the misspecification is worst, after the field trial. NWEA uses the Rasch model because it has been empirically validated for MAP's item types [NWEA-2025-TR] — this provides reasonable prior evidence that the model is appropriate.
+If the Rasch model is misspecified, all simulation results — including the r=0.967 theta recovery and rel=0.931 reliability — overestimate actual field performance. The standard Rasch model fit indices (INFIT mean square 0.70–1.30; OUTFIT < 2.0; pt-biserial > 0.20) will identify items where the misspecification is worst, after the field trial. NWEA uses the Rasch model because it has been empirically validated for MAP's item types [NWEA-2025-TR] — this provides reasonable prior evidence that the model is appropriate.
 
 ### Mitigation
 Post-field-trial item fit analysis. Items failing Rasch fit statistics are retired. Confirmatory factor analysis on pilot data to test the unidimensionality assumption. NWEA's documented use of Rasch provides model validity precedent [NWEA-2025-TR]. The guessing concern is partially addressed by MSQ and EBSR items (lower guess-rate than MCQ); MCQ items have a 25% guess floor that the Rasch model will underestimate for very low-ability students.
@@ -111,17 +111,17 @@ The Incept bank contains 650 items; NWEA's operational pool contains 40,000+ ite
 - More nuanced content coverage (many more items per standard, per grade, per Lexile level)
 
 ### Practical impact
-With 650 operational items (v3 run, 2026-07-03):
-- 38/650 items (5.8%) exceed the 30% exposure rate [SIMULATION] — higher than NWEA's operational target; max item exposure 91%
-- 241 items were never used in the v3 run (v1: 322; initial G3-scoped run: 246) — randomesque top-5 selection in both selection phases recovered ~80 items, but utilization remains concentrated
-- The v1 deterministic-first-passage finding is **fixed** by randomesque selection; two easy-band cells (`literary/171-180`, `informational/171-180`) remain never-served — b-band-aware passage scoring is the queued follow-up
+On the full 786-item harness-loadable bank (v4 run, 2026-07-03):
+- 38 items exceed the 30% exposure rate [SIMULATION] — higher than NWEA's operational target; max item exposure fell to 0.709 (from 0.909 at v3)
+- 289 items were never used in the v4 run — never-used rose from 241/650 at v3 as the bank grew to 786 items; randomesque top-5 selection in both selection phases spreads exposure, but utilization remains concentrated and per-band exposure balancing is the open follow-up
+- The v1 deterministic-first-passage finding is **fixed** by randomesque selection; the 171–180 selection cells (`literary/171-180`, `informational/171-180`) improved but are not yet fully served — b-band-aware passage scoring is the queued follow-up
 - Item security is weaker: students who take the test multiple times will see repeated items (mean pairwise between-session overlap 29.4%)
 - Fine-grained within-standard discrimination (e.g., distinguishing RL.3.2 at RIT 185 vs. 193) is limited by items per cell
 
 This does not make the test invalid, but it limits the product's claims relative to the full MAP.
 
 ### Mitigation
-Bank expansion is the long-term solution — the staged sets already raise the harness-loadable pool to 766 items (the Item Bank tab, §2.1). Near-term mitigations shipped: randomesque selection, the topic-cap constraint (no topic_tag repeats within a session), and the Lexile-band filter. Exposure-aware scoring is the open engineering follow-up; post-pilot Sympson-Hetter exposure control [ACADEMIC; Sympson-Hetter-1983] will impose hard item-level caps, and a per-standard session cap (max 2 items/standard) is proposed in PR #35. Target bank size for operational security: 800–1,000 items (20–25× the test length [Stocking-1994]).
+Bank expansion is the long-term solution — the staged sets already raise the harness-loadable pool to 786 items (the Item Bank tab, §2.1). Near-term mitigations shipped: randomesque selection, the topic-cap constraint (no topic_tag repeats within a session), and the Lexile-band filter. Exposure-aware scoring is the open engineering follow-up; post-pilot Sympson-Hetter exposure control [ACADEMIC; Sympson-Hetter-1983] will impose hard item-level caps, and a per-standard session cap (max 2 items/standard) is proposed in PR #35. Target bank size for operational security: 800–1,000 items (20–25× the test length [Stocking-1994]).
 
 ---
 
@@ -134,7 +134,7 @@ The six Monte Carlo simulations were run on a Grade-3-configured 630-item bank (
 The initial-run results (r=0.948, rel=0.928, RMSE=4.12 RIT) could not expose production-path effects: the v1 production re-run (2026-07-02) surfaced an RMSE regression (4.73) and a +2.62 RIT bias in the Owen running estimate; the v2/v3 runs root-caused and resolved both (see Limitation 2).
 
 ### Mitigation
-**Complete.** The validation now runs the engine's real selection code end-to-end under the TimeBack-parity configuration: v3 (2026-07-03) — production `select_next()` with randomesque exposure control, all 650 items, G2–G5 prior, ~17,900 sessions, seven studies (the v3 validation report in the engine repository — authoritative throughout this package; the v1/v2 reports retained as historical records). The remaining follow-up is the residual 175–190-band bias decomposition (Limitation 2).
+**Complete.** The validation now runs the engine's real selection code end-to-end under the TimeBack-parity configuration on the full bank: v4 (2026-07-03) — production `select_next()` with randomesque exposure control, all 786 harness-loadable items, G2–G5 prior, ~17,900 sessions, seven studies (the v4 validation report in the engine repository — authoritative throughout this package; the v1/v2/v3 reports retained as historical records). The remaining follow-up is per-band exposure balancing (Limitation 7).
 
 ---
 
@@ -142,10 +142,10 @@ The initial-run results (r=0.948, rel=0.928, RMSE=4.12 RIT) could not expose pro
 
 | Question | Status | When answered |
 |---|---|---|
-| Does the algorithm rank students correctly? | **Known** (r=0.963, v3 production path) | Simulation 1, v3 [SIMULATION] |
-| Is the test reliable at core ability range? | **Known** (rel=0.929) | Simulation 2, v3 [SIMULATION] |
-| Why did v1 scores overestimate by +2.6 RIT? | **Known — resolved** (Owen running-estimate prior shrinkage; final score re-based on shipped MLEF; v3 bias −0.38) | v2 root-cause analysis [SIMULATION] |
-| Why do the 175–190 bands read −0.4 to −1.0 RIT low? | **Unknown — follow-up** | Scorer-only decomposition (S12, queued) |
+| Does the algorithm rank students correctly? | **Known** (r=0.967, v4 full-bank production path) | Simulation 1, v4 [SIMULATION] |
+| Is the test reliable at core ability range? | **Known** (rel=0.931, meets the ≥0.93 target) | Simulation 2, v4 [SIMULATION] |
+| Why did v1 scores overestimate by +2.6 RIT? | **Known — resolved** (Owen running-estimate prior shrinkage; final score re-based on shipped MLEF; v4 bias −0.04) | v2 root-cause analysis [SIMULATION] |
+| Is item exposure balanced across bands? | **Partly — follow-up** (289/786 never used; per-band balancing queued) | Simulation 5, v4 [SIMULATION] |
 | Are items content-valid (CCSS-aligned)? | **Likely** (14-dimension quality-check gate) | Field trial will confirm |
 | What are each item's true difficulty parameters? | **Unknown** (b_provisional only) | After N=1,000 field trial |
 | Does score X on our test equal score X on MAP? | **Unknown** | After concurrent validity study |

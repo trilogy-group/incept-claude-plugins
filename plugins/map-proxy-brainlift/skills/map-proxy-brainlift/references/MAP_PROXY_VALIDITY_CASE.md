@@ -1,5 +1,5 @@
 # MAP Proxy Adaptive Assessment — Validity Case
-**Version:** 2.0 | **Date:** 2026-07-03 | **Status:** Pre-pilot (v3 TimeBack-parity validation)
+**Version:** 2.0 | **Date:** 2026-07-03 | **Status:** Pre-pilot (v4 TimeBack-parity validation, full 786-item bank)
 **Audience:** Investors, board members, technical reviewers
 
 ---
@@ -8,7 +8,7 @@
 
 The Incept MAP Proxy is a computer adaptive test (CAT) for reading ability in grades 2–5, designed to deliver the psychometric performance of the NWEA MAP Growth Reading assessment at lower cost and with immediate results. The proxy implements the same Item Response Theory model (Rasch 1PL), the same scoring algorithm (MLEF; Han 2016 [Han-2016]), the six item formats documented across MAP Growth (three of them confirmed in Reading 2–5 specifically), and a content blueprint consistent with MAP's published structure — NWEA's Technical Report Table 3.2 shows an *example* 13/13/13 blueprint and its public test description states 40–43 questions; the engine adopts TimeBack's operational 14/13/13 = 40-scored split, extending to 43 for precision [AUTHORING-DECISION; NWEA-VERIFIED for the 40–43 structure] — verified from NWEA's primary technical reports [NWEA-2025-TR].
 
-**Three things we can already prove.** First, the CAT algorithm works: Monte Carlo simulations (2026-07-03 v3 run: production selection path + randomesque selection, 650 items, G2–G5 prior, TimeBack-parity configuration) demonstrate theta recovery of r=0.963 against MAP's ≥0.90 benchmark, RMSE 3.44 RIT (within the <4.0 target), bias −0.38 RIT (within the |bias|<0.5 criterion), and marginal reliability of 0.929 at the core ability range — ≈0.001 below the ≥0.93 benchmark, expected to exceed it after empirical calibration (MAP's published operational figure is 0.96). The earlier v1 production run's flagged RMSE 4.73 / bias +2.62 were root-caused (Owen running-estimate prior shrinkage) and resolved by re-basing the final score on the shipped MLEF value [SIMULATION]. Second, item quality is gated: all 650 items in the operational bank have passed a 14-dimension quality check with a ≥0.85 pass threshold before entering the bank [AUTHORING-DECISION]. Third, blueprint fidelity holds: 100% of simulated sessions landed within ±1 of the 14/13/13 domain quota on the 40-item scored form — Literary, Informational, and Vocabulary — and 100% met the ≥12 TEI floor (mean 16.2) [SIMULATION].
+**Three things we can already prove.** First, the CAT algorithm works: Monte Carlo simulations (2026-07-03 v4 run: production selection path + randomesque selection, full 786-item bank, G2–G5 prior, TimeBack-parity configuration) demonstrate theta recovery of r=0.967 against MAP's ≥0.90 benchmark, RMSE 3.20 RIT (within the <4.0 target), bias −0.04 RIT (near-eliminated, within the |bias|<0.5 criterion), and marginal reliability of 0.931 at the core ability range — meeting the ≥0.93 benchmark (MAP's published operational figure, 0.96, remains the higher bar). The earlier v1 production run's flagged RMSE 4.73 / bias +2.62 were root-caused (Owen running-estimate prior shrinkage) and resolved by re-basing the final score on the shipped MLEF value [SIMULATION]. Second, item quality is gated: all 650 items in the operational bank have passed a 14-dimension quality check with a ≥0.85 pass threshold before entering the bank [AUTHORING-DECISION]. Third, blueprint fidelity holds: 100% of simulated sessions landed within ±1 of the 14/13/13 domain quota on the 40-item scored form — Literary, Informational, and Vocabulary — and 100% met the ≥12 TEI floor (mean 16.2) [SIMULATION].
 
 **One thing we still need to prove.** Concurrent validity — the claim that a student scoring X on our proxy would score X on the real MAP — requires a scale-linking study in which the same students take both tests within two weeks. This study is not yet complete; RIT output is intentionally blocked until it is. The path is a staged rollout: a ~40-student feasibility pilot (1–2 classes), item calibration accruing from regular use (a ~300-student-equivalent response volume for the core band), then a concurrent validity cohort of N≥1,000 paired sessions — accrued through usage at the Fall 2026 MAP window — to establish the RIT transformation.
 
@@ -144,7 +144,7 @@ The operational bank contains **650 unique items** across grades 2–5, in 13 so
 
 All items carry provisional difficulty parameters (b_provisional) assigned by content experts based on target RIT band and passage Lexile. The provisional b values span −2.5 to +2.0 logits ≈ RIT 175–220 (band labels run 161–220). Empirical calibration is blocked until the field trial (N≥1,000) [Wright-Stone-1979].
 
-**Staged expansions (merged, harness-loadable; production adoption a reviewable decision pending calibration):** +92 edge items (PR #30; floor to ~RIT 155, ceiling to 235) and +44 items (PR #35: 26 standard-gap items closing nine under-target standards + 18 G5 super-ceiling items at RIT 231–250) — **766 items harness-loadable**, b −4.45 → +4.55 ≈ RIT 155–245. Students below RIT 155 route to the official K–2 MAP instrument. Details in the Item Bank tab.
+**Staged expansions (merged, harness-loadable; production adoption a reviewable decision pending calibration):** +92 edge items (PR #30; floor to ~RIT 155, ceiling to 235) and +44 items (PR #35: 26 standard-gap items closing nine under-target standards + 18 G5 super-ceiling items at RIT 231–250) — **786 items harness-loadable** (the `load_bank()` build dedups to 786 unique items, which differs from the naive fixture sum), b −4.45 → +4.55 ≈ RIT 155–250. This full 786-item bank is what the authoritative v4 validation ran against. Students below RIT 155 route to the official K–2 MAP instrument. Details in the Item Bank tab.
 
 ### 3.2 Format distribution
 
@@ -157,7 +157,7 @@ All items carry provisional difficulty parameters (b_provisional) assigned by co
 | EBSR | 63 | 9.7% | ~30 (7.7% per form) |
 | Hot-text | 54 | 8.3% | ~20 (5.1% per form) |
 
-Pool ratio, both framings labeled: 650/40 = **16.3× session length**; against Stocking's recommended 10× floor (10 × 40 = 400 items), **1.6×** [Stocking-1994]. The staged expansions raise the pool further (766 harness-loadable — see §3.1 and the Item Bank tab).
+Pool ratio, both framings labeled: 650/40 = **16.3× session length**; against Stocking's recommended 10× floor (10 × 40 = 400 items), **1.6×** [Stocking-1994]. The staged expansions raise the pool further (786 harness-loadable — see §3.1 and the Item Bank tab).
 
 ### 3.3 RIT band distribution
 
@@ -198,15 +198,15 @@ The quality-check gate is a pre-pilot quality control mechanism, not a substitut
 
 ## 4. Simulation Evidence
 
-Seven Monte Carlo simulations were conducted against the item bank (~17,900 production-path sessions in the v3 run). Full methodology and figures are in the Simulation Evidence tab.
+Seven Monte Carlo simulations were conducted against the item bank (~17,900 production-path sessions in the v4 run). Full methodology and figures are in the Simulation Evidence tab.
 
-**Simulation scope.** The per-simulation sections below record the *initial* run: a Grade-3-configured 630-item bank, G3 fall prior N(−1.5, 1.0), closed-form Fisher-information selector. **The authoritative numbers are the v3 run's — 2026-07-03: production selection path + randomesque selection, 650 items, G2–G5 prior, TimeBack-parity configuration (14/13/13, 40–43 items, SE stop 0.35, TEI floor ≥12)** — results in the Simulation Evidence tab ("v3 TimeBack-Parity Run") and the v3 validation report in the engine repository: r=0.963, RMSE 3.44 RIT, bias −0.38 RIT, reliability 0.929, SEM 3.18, blueprint 100% (±1 vs 14/13/13), TEI floor 100% (mean 16.2), internal cross-bank consistency (synthetic) r 0.912 / LoA [−10.7, +10.2] RIT, reliable range RIT 181–227, 0 MLEF divergences. The path is disclosed, not smoothed: the first production run (v1, 2026-07-02) regressed RMSE to 4.73 and surfaced a +2.62 RIT overestimate; the bias was root-caused to the Owen running estimate's prior shrinkage and resolved by re-basing the final score on the shipped MLEF value (v2), and the deterministic-first-passage exposure finding was fixed with randomesque selection (never-used items 322 → 241). Remaining follow-ups: a residual −0.4 to −1.0 RIT negative bias in the 175–190 bands (scorer-only decomposition queued) and exposure-aware scoring (38/650 items over 30%). Initial-run record:
+**Simulation scope.** The per-simulation sections below record the *initial* run: a Grade-3-configured 630-item bank, G3 fall prior N(−1.5, 1.0), closed-form Fisher-information selector. **The authoritative numbers are the v4 run's — 2026-07-03: production selection path + randomesque selection, full 786-item bank, G2–G5 prior, TimeBack-parity configuration (14/13/13, 40–43 items, SE stop 0.35, TEI floor ≥12)** — results in the Simulation Evidence tab ("v4 Full-Bank Run") and the v4 validation report in the engine repository: r=0.967, RMSE 3.20 RIT, bias −0.04 RIT, reliability 0.931, SEM 3.14, blueprint 100% (±1 vs 14/13/13), TEI floor 100% (mean 16.2), internal cross-bank consistency (synthetic) r 0.918 / LoA [−10.0, +10.0] RIT, reliable range RIT 160–230, 0 MLEF divergences. The path is disclosed, not smoothed: the first production run (v1, 2026-07-02) regressed RMSE to 4.73 and surfaced a +2.62 RIT overestimate; the bias was root-caused to the Owen running estimate's prior shrinkage and resolved by re-basing the final score on the shipped MLEF value (v2); the v3 run re-validated on the 650-item bank (RMSE 3.44, bias −0.38), and the authoritative v4 run re-ran everything on the full 786-item bank after the floor/ceiling/standard-gap expansions merged, improving or holding every metric (bias −0.04, reliable range down to RIT 160). Remaining follow-ups: the 171–180 selection cells improved but are not yet fully served, and never-used items rose to 289 with the larger bank (per-band exposure balancing queued). Initial-run record:
 
 ### Simulation 1: Theta Recovery (N=5,000)
 
 Students with true ability drawn from the G3 fall prior N(−1.5, 1.0). The engine recovered theta estimates correlated r=**0.948** with true theta (MAP benchmark: ≈0.90 [NWEA-2025-TR]), RMSE=**4.12 RIT** (MAP target: <4.0 RIT — slightly above, pre-calibration). Bias: −0.24 RIT (negligible systematic error). [SIMULATION]
 
-**Proves:** The CAT algorithm correctly ranks students by reading ability. (The v1 production-path re-run later surfaced a +2.62 RIT systematic overestimate; it was root-caused to the Owen running estimate's prior shrinkage and resolved — v3 bias is −0.38 RIT. See the Simulation scope note above.)
+**Proves:** The CAT algorithm correctly ranks students by reading ability. (The v1 production-path re-run later surfaced a +2.62 RIT systematic overestimate; it was root-caused to the Owen running estimate's prior shrinkage and resolved — v4 bias is −0.04 RIT on the full bank. See the Simulation scope note above.)
 
 ### Simulation 2: Reliability (500 sessions × 25 theta levels)
 
@@ -226,7 +226,7 @@ b_provisional values were perturbed with Gaussian noise from σ=0.0 to σ=1.0 lo
 
 Students scored on our bank and a synthetic MAP-like bank (difficulty distribution approximating NWEA's operational pool). Correlation: r=**0.902**. Mean difference: −0.15 RIT (negligible bias). 95% Limits of Agreement: **±11.3 RIT**. [SIMULATION]
 
-**Proves (initial run):** Scores from our engine and a synthetic MAP-like configuration are internally consistent. Under v3, r=0.912 and 95% LoA [−10.7, +10.2] RIT (see Simulation scope note); LoA and bias against *real* MAP scores are the metrics only the scale-linking study can produce.
+**Proves (initial run):** Scores from our engine and a synthetic MAP-like configuration are internally consistent. Under v4, r=0.918 and 95% LoA [−10.0, +10.0] RIT (see Simulation scope note); LoA and bias against *real* MAP scores are the metrics only the scale-linking study can produce.
 
 ### Simulation 5: Blueprint Adherence (N=1,000)
 
@@ -236,7 +236,7 @@ Domain quota enforcement verified across 1,000 simulated sessions. Every session
 
 ### Simulation 6: Floor/Ceiling Characterization (200 sessions × 28 θ levels)
 
-Reliable measurement range (reliability ≥0.85): **RIT 181–227** (θ ∈ [−1.93, +2.74]). This covers G3–G5 and above-average G2 students; the median G2 fall student (~RIT 170) is below the reliable floor, and G2 band expansion is queued. Floor effects below RIT 181 and ceiling effects above RIT 227 are expected given the bank's difficulty distribution [SIMULATION].
+Reliable measurement range (reliability ≥0.85) under the authoritative v4 full-bank run: **RIT 160–230**. This covers G3–G5, the G4/G5 ceiling, and median-and-above G2 students — the median G2 fall student (~RIT 170) is now inside the reliable range (previously below the floor), which resolves the adversarial review's most-cited limitation. Only the bottom ~5% of readers (below RIT 160) fall below the floor and route to the K–2 MAP instrument. Floor effects below RIT 160 and ceiling effects above RIT 230 are expected given the bank's difficulty distribution [SIMULATION].
 
 **Proves:** The test provides reliable measurement across the G3–G5 operational range and for above-average G2 students.
 
@@ -244,17 +244,17 @@ Reliable measurement range (reliability ≥0.85): **RIT 181–227** (θ ∈ [−
 
 ## 5. What the Evidence Proves
 
-Numbers below are from the 2026-07-03 v3 run (production path + randomesque selection, TimeBack-parity configuration — authoritative):
+Numbers below are from the 2026-07-03 v4 run (production path + randomesque selection, full 786-item bank, TimeBack-parity configuration — authoritative):
 
 | Claim | Evidence | Confidence | Source |
 |---|---|---|---|
-| CAT algorithm ranks students correctly | r=0.963; RMSE=3.44 RIT (<4.0 target); bias −0.38 RIT (within \|bias\|<0.5; residual −0.4 to −1.0 in the 175–190 bands under decomposition) | High | [SIMULATION] |
-| Test is reliable at core operational range | rel=0.929 (≈0.001 below the ≥0.93 benchmark; MAP published 0.96), SEM=3.18 RIT | High | [SIMULATION] |
+| CAT algorithm ranks students correctly | r=0.967; RMSE=3.20 RIT (<4.0 target); bias −0.04 RIT (near-eliminated on the full bank; within abs(bias)<0.5) | High | [SIMULATION] |
+| Test is reliable at core operational range | rel=0.931 (meets the ≥0.93 target; MAP published 0.96 is the higher operational bar), SEM=3.14 RIT | High | [SIMULATION] |
 | Algorithm is robust to pre-calibration error | rel≥0.915 at σ≤1.0 | High | [SIMULATION] |
-| Internal cross-bank consistency (synthetic — NOT MAP agreement) | r 0.912, 95% LoA [−10.7, +10.2] RIT (synthetic bank; caveats disclosed) | Medium | [SIMULATION] |
+| Internal cross-bank consistency (synthetic — NOT MAP agreement) | r 0.918, 95% LoA [−10.0, +10.0] RIT (synthetic bank; caveats disclosed) | Medium | [SIMULATION] |
 | Blueprint is enforced at every session | 100% within ±1 of 14/13/13 on the 40-item scored form, production selector; TEI floor 100% (mean 16.2 ≥ 12) | High | [SIMULATION] |
 | Scoring is numerically stable | 0 MLEF divergences in ~17,900 sessions; adversarial simulees finite, bounded, correctly ordered | High | [SIMULATION] |
-| Reliable across G3–G5 + above-average G2 | RIT 181–227 (median G2 fall below floor; floor expansion staged) | High | [SIMULATION] |
+| Reliable across G2 (median and above) through G5 | RIT 160–230 (median G2 fall reader now inside the reliable range; only the bottom ~5% below RIT 160 route to K–2 MAP) | High | [SIMULATION] |
 | Items are CCSS-aligned | 14-dimension quality-check gate | Medium (pre-empirical) | [AUTHORING-DECISION] |
 | Content coverage consistent with MAP's published structure | 14/13/13 = 40 scored (TimeBack operational split; NWEA publishes an example 13/13/13 and 40–43 questions) | High | [AUTHORING-DECISION; NWEA-VERIFIED for 40–43] |
 | Rasch model matches MAP's model | NWEA Tech Report | High | [NWEA-VERIFIED] |
@@ -287,18 +287,18 @@ All b_provisional values are assigned by content experts, not estimated from stu
 
 ### Stage 1 (current): Algorithm + Content Validity ✅
 
-- CAT algorithm validated via simulation on the production path under the TimeBack-parity configuration (v3, 2026-07-03): r=0.963, RMSE 3.44, bias −0.38, reliability 0.929 [SIMULATION]
+- CAT algorithm validated via simulation on the production path under the TimeBack-parity configuration (v4, 2026-07-03, full 786-item bank): r=0.967, RMSE 3.20, bias −0.04, reliability 0.931 [SIMULATION]
 - Content blueprint consistent with MAP's published structure: 14/13/13 = 40 scored (TimeBack operational split), 6 formats (3 confirmed in Reading 2–5 specifically), 50+ CCSS standards [AUTHORING-DECISION; NWEA-VERIFIED]
-- Item quality gated: 650 operational items passing the 14-dimension quality check (766 harness-loadable with staged expansions)
+- Item quality gated: 650 operational items passing the 14-dimension quality check (786 harness-loadable with staged expansions)
 - RIT output blocked; logit score ± b-uncertainty-adjusted SE output only
 
 ### Stage 2: Feasibility Pilot (~40 students) + Calibration Accrued Through Regular Use
 
-- Feasibility pilot: ~40 students (1–2 classes), one adaptive session each — usability, engagement (completion rate, duration, rapid-guess rates), teacher/student experience, and early item red flags. Deliberately includes ≥8 below-median G2 and ≥8 above-median G5 readers for floor/ceiling coverage. No calibration claims: ~1,600 responses cannot calibrate a 766-item bank
+- Feasibility pilot: ~40 students (1–2 classes), one adaptive session each — usability, engagement (completion rate, duration, rapid-guess rates), teacher/student experience, and early item red flags. Deliberately includes ≥8 below-median G2 and ≥8 above-median G5 readers for floor/ceiling coverage. No calibration claims: ~1,600 responses cannot calibrate a 786-item bank
 - Calibration accrues from regular use: ongoing sessions accumulate toward calibration thresholds (a ~300-student-equivalent response volume for the core band; ≥150 responses per tail-band item for the tails)
 - Rasch calibration: estimate empirical b̂ for each item as thresholds are crossed; retire items failing fit statistics (INFIT > 1.30, outfit > 2.00, pt-biserial < 0.20)
 - Internal structure: confirm one dominant factor per domain (confirmatory factor analysis)
-- Reliability post-calibration: expected to rise from 0.929 to ≥0.93 as b values improve; the residual 175–190-band negative bias is expected to shrink with empirical b̂ values — the plan is designed to resolve this; simulation supports but cannot guarantee it
+- Reliability post-calibration: marginal reliability already meets the ≥0.93 target (0.931 under v4); empirical calibration is expected to close the remaining gap to MAP's published 0.96 operational bar as b values improve — the plan is designed to resolve this; simulation supports but cannot guarantee it
 - **Timeline:** pilot within days of approval; calibration a function of usage volume
 
 ### Stage 3 (N=1,000 concurrent): Scale Linking + Concurrent Validity

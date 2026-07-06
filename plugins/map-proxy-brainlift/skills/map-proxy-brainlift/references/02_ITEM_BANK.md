@@ -5,12 +5,12 @@
 
 ## 1. Bank Overview
 
-The operational item bank contains **650 unique items** across grades 2–5 (provisional b spans −2.5 to +2.0 logits ≈ RIT 175–220; band labels run 161–220) — this is the bank the v3 validation (2026-07-03) ran against. Staged expansions bring the harness-loadable total to **766 items** spanning ≈ RIT 155–245 (see §2.1). All items carry provisional difficulty parameters (b_provisional) assigned by content experts. No item has been empirically calibrated; empirical calibration requires a field trial of N ≥ 1,000 students [Wright-Stone-1979][Linacre-1994].
+The operational item bank contains **650 unique items** across grades 2–5 (provisional b spans −2.5 to +2.0 logits ≈ RIT 175–220; band labels run 161–220). Staged expansions bring the harness-loadable total to **786 items** spanning ≈ RIT 155–250 (the `load_bank()` build dedups to 786 unique items, which differs from the naive fixture sum; see §2.1) — and this full 786-item bank is what the authoritative v4 validation (2026-07-03) ran against. All items carry provisional difficulty parameters (b_provisional) assigned by content experts. No item has been empirically calibrated; empirical calibration requires a field trial of N ≥ 1,000 students [Wright-Stone-1979][Linacre-1994].
 
 Pool-to-test ratio, stated in both framings so the two numbers that circulate are reconciled rather than contradictory [Stocking-1994]:
 - **Session-length framing:** 650 / 40 = **16.3× session length** (the framing used when comparing against a fixed form).
 - **Stocking-floor framing:** against the *recommended* 10× floor of 10 × 40 = 400 items, the bank is **1.6× the recommended floor** (minimum 6× floor = 240 items; 2.7×).
-- Staged expansions raise the pool further (766 harness-loadable).
+- Staged expansions raise the pool further (786 harness-loadable).
 - NWEA's operational pool: 40,000+ items [NWEA-2025-TR]. Bank: 650 items (**1.6% of NWEA scale**).
 
 Wherever a pool ratio is quoted elsewhere in this package (the Case for Approval tab §6, the package README, the Validity Case tab §3.2), it uses these two labeled framings.
@@ -46,7 +46,7 @@ Two expansion sets are merged and load in the validation harness; adopting them 
 |---|---|---|---|
 | Edge expansion (PR #30) | +92 | Floor extension to ~RIT 155; ceiling to 235 | Merged; harness-validated |
 | Standard-gap + G5 super-ceiling (PR #35) | +44 (26 + 18) | 26 standard-gap items closing nine under-target standards (see §5 note); 18 G5 super-ceiling items at **RIT 231–250** (b to +4.55), directly answering the ~20%-of-current-G5-above-RIT-235 population finding | Merged, all CI green; 26/26 and 18/18 passed quality checks after re-authoring, minimum score 0.950 |
-| **Harness-loadable total** | **766** | b −4.45 → +4.55 ≈ **RIT 155–245** | Operational bank remains 650 until adoption |
+| **Harness-loadable total** | **786** (dedup via `load_bank()`) | b −4.45 → +4.55 ≈ **RIT 155–250** | Operational bank remains 650 until adoption; v4 validation ran against the full 786 |
 
 Notes, stated plainly:
 - **Sub-155 students route to the official K–2 MAP instrument.** The floor extension is honest coverage, not a claim to measure emergent decoding; below RIT 155 the proxy is the wrong tool and says so.
@@ -118,7 +118,7 @@ Note: The band 181–190 was a critical gap as of pre-June 2026 (only 20 items).
 
 ## 5. CCSS Standard Coverage Matrix
 
-> **Superseded counts — refreshed per the PR #35 audit (766-item basis).** The
+> **Superseded counts — refreshed per the PR #35 audit (786-item basis).** The
 > matrix below predates the staged expansions and, per the PR #35 audit, was
 > **stale even for the 650-item bank**: items added in `bank_gap_fixes.json`
 > and `bank_match.json` were never counted into it (e.g., L.3.5 shows 2 below
@@ -269,7 +269,7 @@ Three G3 standards are over-represented: RL.3.3 (28 items vs. target 8), RI.3.3 
 
 ### 7.3 G4 RI.4.1 underrepresentation — closed
 
-Grade 4 "citing evidence in informational text" (RI.4.1) was the most critical G4 gap (the historical matrix showed 2 items; the corrected fixture count was 5). PR #35 raised it to **9 items — at target**. Retained here because the finding drove the expansion; the gap itself is closed in the 766-item staged bank.
+Grade 4 "citing evidence in informational text" (RI.4.1) was the most critical G4 gap (the historical matrix showed 2 items; the corrected fixture count was 5). PR #35 raised it to **9 items — at target**. Retained here because the finding drove the expansion; the gap itself is closed in the 786-item staged bank.
 
 ### 7.4 PCM step parameter
 
@@ -295,8 +295,8 @@ The Rasch PCM step parameter Δ = 0.5 logits for EBSR items is an authoring esti
 
 | Phase | Bank target | CAT ratio (vs 40-item session) | Purpose |
 |---|---|---|---|
-| Current operational | 650 items | 16.3× | Pre-pilot operation (v3-validated) |
-| Staged (harness-loadable) | 766 items | 19.2× | Both-tails coverage, pending adoption |
+| Current operational | 650 items | 16.3× | Pre-pilot operation |
+| Staged (harness-loadable) | 786 items | 19.7× | Both-tails coverage (v4-validated), pending adoption |
 | Field trial (N=1,000) | ≥400 active items | ≥10× (Stocking recommended floor) | Empirical calibration coverage |
 | Operational | 800–1,000 items | 20–25× | Security + exposure control |
 

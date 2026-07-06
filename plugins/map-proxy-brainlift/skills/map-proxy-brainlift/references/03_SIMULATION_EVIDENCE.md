@@ -1,47 +1,65 @@
 # Simulation Evidence — MAP Proxy Adaptive Assessment
 **Version:** 2.0 | **Date:** 2026-07-03 | **Audience:** Investors, technical reviewers
 
-This document presents all seven Monte Carlo psychometric simulations conducted on the Incept MAP Proxy engine. Source data: the v3 validation report in the engine repository (**v3 TimeBack-parity run — authoritative**); historical records: the v2 re-based run, the v1 production-path re-run, and the initial G3-scoped run, all in the engine repository. Figures: the engine repository's validation figures folder.
+This document presents all seven Monte Carlo psychometric simulations conducted on the Incept MAP Proxy engine. Source data: the v4 validation report in the engine repository (**v4 full-bank run — authoritative**); historical records: the v3 parity run, the v2 re-based run, the v1 production-path re-run, and the initial G3-scoped run, all in the engine repository. Figures: the engine repository's validation figures folder.
 
 ---
 
-## v3 TimeBack-Parity Run (2026-07-03) — Authoritative Results
+## v4 Full-Bank Run (2026-07-03) — Authoritative Results
 
-Provenance: **2026-07-03 v3 run: production selection path + randomesque selection, 650 items, G2–G5 prior, TimeBack-parity configuration.** The engine adopted TimeBack's operational constants via PRs #26/#34 — domain quotas 14/13/13 (40 scored items; `ADAPTIVE_ITEMS_MIN` = 40 as the scored floor before any stop), hard cap 43 with a precision-extension band at items 41–43, SE stop 0.35 evaluated only at ≥40 items (quotas alone never stop the test), TEI floor ≥12 with gap-match correctly counted as TE, and the TimeBack bit-for-bit parity MLEF solver (damped Newton, trust-region max_step 1.0, 6dp rounding, A&S 7.1.26 CDF). Selection is randomesque (top-5) in both the quota-filling and precision-extension phases. Seven Monte Carlo studies, ~17,900 production-path sessions; a seventh study (adversarial simulees) was added alongside the original six. Raw results: `data/summary_g2g5_650_v3.json`.
+Provenance: **2026-07-03 v4 run: production selection path + randomesque selection, full 786-item bank, G2–G5 prior, TimeBack-parity configuration.** This run re-validates everything on the complete bank after the floor/ceiling/standard-gap expansions merged — the `load_bank()` build dedups to 786 unique items (which differs from the naive fixture sum). The engine adopted TimeBack's operational constants via PRs #26/#34 — domain quotas 14/13/13 (40 scored items; `ADAPTIVE_ITEMS_MIN` = 40 as the scored floor before any stop), hard cap 43 with a precision-extension band at items 41–43, SE stop 0.35 evaluated only at ≥40 items (quotas alone never stop the test), TEI floor ≥12 with gap-match correctly counted as TE, and the TimeBack bit-for-bit parity MLEF solver (damped Newton, trust-region max_step 1.0, 6dp rounding, A&S 7.1.26 CDF). Selection is randomesque (top-5) in both the quota-filling and precision-extension phases. Seven Monte Carlo studies, ~17,900 production-path sessions; a seventh study (adversarial simulees) was added alongside the original six. v4 improved or held every metric versus the interim v3 run.
 
-| Metric | v1 re-run (2026-07-02) | v2 fixed (2026-07-02) | **v3 parity (2026-07-03)** | Benchmark | Verdict |
-|---|---|---|---|---|---|
-| Sim 1 theta recovery r | 0.954 | 0.959 | **0.963** | ≥ 0.90 | ✅ best of the runs |
-| Sim 1 RMSE | 4.73 RIT ⚠️ | 3.70 RIT | **3.44 RIT** | < 4.0 RIT | ✅ within target |
-| Sim 1 bias | +2.62 RIT ⚠️ | −0.46 RIT | **−0.38 RIT** (reliable-range −0.27) | \|bias\| < 0.5 | ✅ |
-| Sim 1 max per-band \|bias\| (RIT 181+) | hidden | 1.20 RIT | **0.83 RIT** | ≤ 1.5 RIT | ✅ |
-| Sim 2 reliability (operational range) | 0.929 | 0.923 | **0.929** | 0.93 target | ⚠️ ≈0.001 short — known pre-calibration gap, now essentially closed |
-| Sim 2 SEM (operational range) | 3.18 RIT | 3.31 RIT | **3.18 RIT** | ≤ 4.0 RIT | ✅ |
-| Sim 3 max tolerable σ | 1.0 logits | 1.0 logits | **1.0 logits** (reliability ≥ 0.915 at every σ) | ≥ 0.5 | ✅ |
-| Sim 4 (internal cross-bank consistency, synthetic) r / 95% LoA | 0.909 / [−7.9, +8.3] | 0.905 / [−11.3, +10.6] | **0.912 / [−10.7, +10.2] RIT** | r ≥ 0.85 | ✅ — NOT MAP agreement (synthetic bank) |
-| Sim 5 blueprint adherence (±1) | 100% (13/13/13) | 100% (13/13/13) | **100% (14/13/13 on the 40-item scored form)** | 100% | ✅ |
-| Sim 5 TEI floor met | not audited | not audited | **100% (mean 16.2 TE ≥ 12, gap-match counted)** | 100% | ✅ new audit |
-| Sim 5 never-used items | 322/650 | 256/650 | **241/650** | ↓ | ✅ best so far |
-| Sim 5 over-exposed (>30%) | 41/650 | 39/650 | **38/650** | ↓ | ~flat; exposure-aware scoring is the open follow-up |
-| Sim 6 reliable range (rel ≥ 0.85) | RIT 181–230 | RIT 186–227 | **RIT 181–227** | — | floor recovered ~5 RIT vs v2 |
-| Sim 7 adversarial simulees | n/a | all finite, ordered | **all finite, bounded, correctly ordered** | no divergence | ✅ |
-| MLEF divergences (any sim) | unmeasured | 0 / ~17,500 | **0 / ~17,900 sessions** | 0 | ✅ |
+| Metric | v1 re-run (2026-07-02) | v2 fixed (2026-07-02) | v3 parity (650 items) | **v4 full bank (786 items)** | Benchmark | Verdict |
+|---|---|---|---|---|---|---|
+| Sim 1 theta recovery r | 0.954 | 0.959 | 0.963 | **0.967** | ≥ 0.90 | ✅ best of the runs |
+| Sim 1 RMSE | 4.73 RIT ⚠️ | 3.70 RIT | 3.44 RIT | **3.20 RIT** | < 4.0 RIT | ✅ within target |
+| Sim 1 bias | +2.62 RIT ⚠️ | −0.46 RIT | −0.38 RIT | **−0.04 RIT** (near-eliminated) | abs(bias) < 0.5 | ✅ |
+| Sim 1 max per-band abs(bias) (RIT 181+) | hidden | 1.20 RIT | 0.83 RIT | **0.83 RIT** | ≤ 1.5 RIT | ✅ |
+| Sim 2 reliability (operational range) | 0.929 | 0.923 | 0.929 | **0.931** | 0.93 target | ✅ meets the 0.93 target |
+| Sim 2 SEM (operational range) | 3.18 RIT | 3.31 RIT | 3.18 RIT | **3.14 RIT** | ≤ 4.0 RIT | ✅ |
+| Sim 3 max tolerable σ | 1.0 logits | 1.0 logits | 1.0 logits | **1.0 logits** (reliability ≥ 0.915 at every σ) | ≥ 0.5 | ✅ |
+| Sim 4 (internal cross-bank consistency, synthetic) r / 95% LoA | 0.909 / [−7.9, +8.3] | 0.905 / [−11.3, +10.6] | 0.912 / [−10.7, +10.2] | **0.918 / [−10.0, +10.0] RIT** | r ≥ 0.85 | ✅ — NOT MAP agreement (synthetic bank) |
+| Sim 5 blueprint adherence (±1) | 100% (13/13/13) | 100% (13/13/13) | 100% | **100% (14/13/13 on the 40-item scored form)** | 100% | ✅ |
+| Sim 5 TEI floor met | not audited | not audited | 100% | **100% (mean 16.2 TE ≥ 12, gap-match counted)** | 100% | ✅ |
+| Sim 5 never-used items | 322/650 | 256/650 | 241/650 | **289/786** | ↓ | rose with the larger bank; per-band exposure balancing is the open follow-up |
+| Sim 5 over-exposed (>30%) | 41/650 | 39/650 | 38/650 | **38/786** | ↓ | max exposure 0.709; exposure-aware scoring the open follow-up |
+| Sim 6 reliable range (rel ≥ 0.85) | RIT 181–230 | RIT 186–227 | RIT 181–227 | **RIT 160–230** | — | floor down to RIT 160 — median G2 fall reader now inside the reliable range |
+| Sim 7 adversarial simulees | n/a | all finite, ordered | all finite, ordered | **all finite, bounded, correctly ordered** | no divergence | ✅ |
+| MLEF divergences (any sim) | unmeasured | 0 / ~17,500 | 0 / ~17,900 | **0 / ~17,900 sessions** | 0 | ✅ |
 
 **Session behavior:** mean 40.6 items per session; 76.5% stop at exactly 40 (SE ≤ 0.35 met at the scored floor), 15.1% run to the 43-item hard cap; no session stops below 40 — quota-only stopping is confirmed removed.
 
-![Simulation 1 (v3): theta recovery under the TimeBack-parity run — true vs estimated ability](../../engine/scripts/validation/figures/sim1_theta_recovery_v3.png)
+![Simulation 1 (v4): theta recovery on the full 786-item bank — true vs estimated ability](../../engine/scripts/validation/figures/sim1_theta_recovery_v4.png)
 
-![Simulation 1 (v3): per-band bias under the TimeBack-parity run](../../engine/scripts/validation/figures/sim1_band_bias_v3.png)
+![Simulation 1 (v4): per-band bias on the full 786-item bank](../../engine/scripts/validation/figures/sim1_band_bias_v4.png)
 
-**How v3 relates to the runs below.** The v1 production-path re-run (next section) flagged RMSE 4.73 and a +2.62 RIT systematic overestimate. The v2 run root-caused the bias: it lived in the **Owen running estimate's prior shrinkage**, not in the shipped score — re-basing the final score on the score report's MLEF `overall_logit` (the number students actually receive) removed it. v3 re-runs the identical validation under the TimeBack-parity constants with randomesque exposure control in both selection phases; no scorer semantics changed. The v1 findings of deterministic first-passage selection and 322/650 never-used items are addressed by randomesque selection (never-used down to 241; max exposure 91%). Remaining open items: a residual −0.4 to −1.0 RIT negative bias in the RIT 175–190 bands (scorer-only decomposition queued as follow-up), exposure-aware scoring, and two never-served easy-band cells (`literary/171-180`, `informational/171-180`).
+![Simulation 2 (v4): reliability curve across the ability range on the full bank](../../engine/scripts/validation/figures/sim2_reliability_v4.png)
+
+![Simulation 4 (v4): internal cross-bank consistency (Bland-Altman, synthetic bank)](../../engine/scripts/validation/figures/sim4_comparability_v4.png)
+
+![Simulation 5 (v4): blueprint adherence and item-exposure distribution on the full bank](../../engine/scripts/validation/figures/sim5_coverage_v4.png)
+
+![Simulation 6 (v4): floor and ceiling characterization — reliable range RIT 160–230](../../engine/scripts/validation/figures/sim6_floor_ceiling_v4.png)
+
+**The headline: the floor is largely closed.** The reliable range (reliability ≥ 0.85) now spans **RIT 160–230**, down from RIT 181–227 in the v3 650-item run. The median G2 fall reader (~RIT 170) is now inside the reliable range — previously below the floor. This resolves the adversarial review's most-cited limitation; only the bottom ~5% of readers (below RIT 160) route to the K–2 MAP instrument. Overall bias fell to −0.04 RIT (near-eliminated on the full bank), and marginal reliability rose to 0.931, meeting the ≥0.93 target (MAP's published 0.96 remains the higher operational bar).
+
+**How v4 relates to the runs below.** The v1 production-path re-run flagged RMSE 4.73 and a +2.62 RIT systematic overestimate. The v2 run root-caused the bias: it lived in the **Owen running estimate's prior shrinkage**, not in the shipped score — re-basing the final score on the score report's MLEF `overall_logit` (the number students actually receive) removed it. The v3 run re-validated the identical suite under the TimeBack-parity constants with randomesque exposure control on the 650-item bank (RMSE 3.44, bias −0.38, reliable range RIT 181–227). v4 re-runs everything on the full 786-item bank after the floor/ceiling/standard-gap expansions merged; no scorer semantics changed. The honest residual: never-used items rose to 289/786 as the bank grew, the 171–180 selection cells (`literary/171-180`, `informational/171-180`) improved but are not yet fully served, and per-band exposure balancing remains the open engineering follow-up.
 
 ---
 
-## Production-Path Re-run (2026-07-02, v1) — Historical Record (superseded by the v3 run above)
+## v3 TimeBack-Parity Run (2026-07-03, 650 items) — Historical Record (superseded by the v4 full-bank run above)
+
+*This section is preserved as the record of the interim v3 run on the 650-item operational bank, before the floor/ceiling/standard-gap expansions merged. Its numbers (r 0.963, RMSE 3.44, bias −0.38, reliability 0.929, reliable range RIT 181–227, never-used 241/650) are superseded by the v4 full-bank run above and should not be quoted as current.*
+
+The v3 run executed the seven-study suite on the 650-item operational bank under the TimeBack-parity constants (14/13/13 = 40 scored, hard cap 43, SE stop 0.35, TEI floor ≥12) with randomesque top-5 selection in both selection phases. It cleared what the v1 run had flagged — RMSE 3.44 RIT (within the <4.0 target), bias −0.38 RIT, 0 MLEF divergences — and recovered the reliable floor to RIT 181 (from RIT 186 at v2). Its disclosed residuals — a −0.4 to −1.0 RIT negative bias in the RIT 175–190 bands and 241/650 never-used items — motivated the bank expansions that the authoritative v4 run then validated. Raw results: `data/summary_g2g5_650_v3.json`.
+
+---
+
+## Production-Path Re-run (2026-07-02, v1) — Historical Record (superseded by the v4 full-bank run above)
 
 *This section is preserved as the record of the first production-path run and its honestly-reported regressions. Its flagged findings (+2.62 RIT bias, RMSE 4.73, deterministic first passage) were subsequently root-caused and resolved — see the v3 section above. Do not quote these numbers as current.*
 
-The full-bank re-run is complete. It was run on the **true production selection path** — the engine's real `select_next()` (shadow-test feasibility, domain quotas, passage grouping, Lexile-band filter, topic cap, TEI floor) driven through the same per-response state machine as `api/sessions.py` — against **all 650 items** (including `bank_ebsr_191_200.json`, which the old harness silently omitted; old runs used 630 items across 12 of 13 bank files), with a **G2–G5 prior N(−1.0, 1.2)** and reduced N (~15,350 production-path sessions; Monte Carlo error ≈ ±0.005 on r, ±0.1 RIT on RMSE/SEM). Report: the v1 validation report in the engine repository (superseded by the v3 validation report). These numbers superseded the initial G3-scoped run recorded in the per-simulation sections below, and are in turn superseded by the v3 section at the top of this document.
+The full-bank re-run is complete. It was run on the **true production selection path** — the engine's real `select_next()` (shadow-test feasibility, domain quotas, passage grouping, Lexile-band filter, topic cap, TEI floor) driven through the same per-response state machine as `api/sessions.py` — against **all 650 items** (including `bank_ebsr_191_200.json`, which the old harness silently omitted; old runs used 630 items across 12 of 13 bank files), with a **G2–G5 prior N(−1.0, 1.2)** and reduced N (~15,350 production-path sessions; Monte Carlo error ≈ ±0.005 on r, ±0.1 RIT on RMSE/SEM). Report: the v1 validation report in the engine repository (superseded by the v4 validation report). These numbers superseded the initial G3-scoped run recorded in the per-simulation sections below, and are in turn superseded by the v4 full-bank section at the top of this document.
 
 | Metric | Initial run (630 items, closed-form) | Re-run (650 items, G2–G5 prior, production selector) | Verdict |
 |---|---|---|---|
@@ -70,7 +88,7 @@ The full-bank re-run is complete. It was run on the **true production selection 
 
 ## Methodology Overview
 
-**Simulation scope.** The initial simulations recorded in the per-simulation sections below were run on a Grade-3-configured 630-item bank, with true ability drawn from a G3 fall prior N(−1.5, 1.0), and used a closed-form Fisher-information selector rather than the full production shadow-test path. **The authoritative numbers are the v3 TimeBack-parity run's (2026-07-03) — see the top of this document. The v1 production-path re-run (2026-07-02) and the per-simulation sections below remain as historical records.**
+**Simulation scope.** The initial simulations recorded in the per-simulation sections below were run on a Grade-3-configured 630-item bank, with true ability drawn from a G3 fall prior N(−1.5, 1.0), and used a closed-form Fisher-information selector rather than the full production shadow-test path. **The authoritative numbers are the v4 full-bank run's (2026-07-03) — see the top of this document. The v3 parity run, the v1 production-path re-run (2026-07-02), and the per-simulation sections below remain as historical records.**
 
 All simulations use Monte Carlo sampling against the item bank:
 
@@ -300,16 +318,16 @@ Students below RIT 181 — roughly the below-8th-percentile G3 fall range — re
 
 ## Validity Claims Summary
 
-Numbers below are from the authoritative v3 TimeBack-parity run (2026-07-03; the v3 validation report in the engine repository).
+Numbers below are from the authoritative v4 full-bank run (2026-07-03; the v4 validation report in the engine repository).
 
 | Claim | Evidence | Confidence | Source |
 |---|---|---|---|
-| CAT algorithm ranks G2–G5 ability accurately | Sim 1: r=0.963; RMSE=3.44 RIT (<4.0 benchmark); bias −0.38 RIT (reliable-range −0.27; max per-band 0.83) | **High** | [SIMULATION] |
-| Test reliability meets minimum threshold (≥0.85) | Sim 2: rel=0.929 (≈0.001 below the ≥0.93 target), SEM=3.18 RIT | **High** | [SIMULATION] |
+| CAT algorithm ranks G2–G5 ability accurately | Sim 1: r=0.967; RMSE=3.20 RIT (<4.0 benchmark); bias −0.04 RIT (near-eliminated on the full bank; max per-band 0.83) | **High** | [SIMULATION] |
+| Test reliability meets the ≥0.93 target | Sim 2: rel=0.931 (meets the ≥0.93 target; MAP published 0.96 is the higher operational bar), SEM=3.14 RIT | **High** | [SIMULATION] |
 | System robust to provisional parameter error | Sim 3: rel≥0.915 at σ≤1.0 logits | **High** | [SIMULATION] |
-| Internal cross-bank consistency (synthetic — NOT MAP agreement) | Sim 4: r=0.912, 95% LoA [−10.7, +10.2] RIT (synthetic bank; caveats disclosed) | **Medium** | [SIMULATION; synthetic MAP bank] |
+| Internal cross-bank consistency (synthetic — NOT MAP agreement) | Sim 4: r=0.918, 95% LoA [−10.0, +10.0] RIT (synthetic bank; caveats disclosed) | **Medium** | [SIMULATION; synthetic MAP bank] |
 | Blueprint fidelity maintained 100% | Sim 5: 100.0% sessions within ±1 of 14/13/13 on the 40-item scored form; TEI floor met in 100% (mean 16.2 ≥ 12) | **High** | [SIMULATION] |
-| Reliable across G3–G5 + above-average G2 | Sim 6: RIT 181–227 reliable (median G2 fall student ~RIT 170 is below the reliable floor; floor expansion staged — see the Item Bank tab, §2.1) | **High** | [SIMULATION] |
+| Reliable across G2 (median and above) through G5 | Sim 6: RIT 160–230 reliable (median G2 fall reader ~RIT 170 now inside the reliable range; only the bottom ~5% below RIT 160 route to K–2 MAP) | **High** | [SIMULATION] |
 | Scoring numerically stable under adversarial response patterns | Sim 7: all-correct / all-wrong / alternating / rapid-guessing profiles all finite, fence-bounded, correctly ordered; 0 divergences in ~17,900 sessions | **High** | [SIMULATION] |
 | Scores comparable to actual NWEA MAP | Not yet measured | **Not yet** | Requires concurrent validity study |
 | Items calibrated to NWEA's RIT scale | Not yet measured | **Not yet** | Requires scale-linking study |

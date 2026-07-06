@@ -1,6 +1,6 @@
 ---
 name: map-proxy-brainlift
-description: The knowledge base a REVIEWER AGENT (e.g. an academics-team evaluating agent) loads to understand and evaluate the Incept MAP Proxy — an adaptive G2-G5 reading CAT designed to place students on the same ability continuum as NWEA MAP Growth Reading 2-5. Covers the instrument's defining feature of mastery, its BrainLift (the seven load-bearing Spiky POVs and their evidence), what is actually built and live-verified (v3 simulation suite, 2026-07-03), the case for approval (a Stage-2 feasibility pilot), the audit history (two adversarial audits + a teammate review, and every finding's disposition), the honest tradeoff logic (locked decisions vs. genuinely open forks vs. deliberately dropped approaches), and the full limitations/honest-ceiling disclosure. Use when a reviewer agent is asked to "review/evaluate the MAP proxy", "decide whether to approve the MAP proxy pilot", "judge the MAP proxy validity case", or needs full reasoning context (not a checklist) to make an informed, fair judgment. The SKILL.md body is self-contained (every number and evidence tag needed for a normal review is embedded below); the full, unabridged source documents (BrainLift, Case for Approval, Audits & Fixes, Psychometric Design, Item Bank, Simulation Evidence, Concurrent Validity Plan, Limitations, Sources, and the master Validity Case) are bundled in references/ for deep technical dives — read them on demand, not by default. Grounded in documents dated 2026-07-03 and NWEA's MAP Growth Technical Report for 2024-2025 / 2025 Norms.
+description: The knowledge base a REVIEWER AGENT (e.g. an academics-team evaluating agent) loads to understand and evaluate the Incept MAP Proxy — an adaptive G2-G5 reading CAT designed to place students on the same ability continuum as NWEA MAP Growth Reading 2-5. Covers the instrument's defining feature of mastery, its BrainLift (the seven load-bearing Spiky POVs and their evidence), what is actually built and live-verified (the authoritative v4 full-bank simulation suite, 2026-07-03, on the full 786-item bank), the case for approval (a Stage-2 feasibility pilot), the audit history (two adversarial audits + a teammate review, and every finding's disposition), the honest tradeoff logic (locked decisions vs. genuinely open forks vs. deliberately dropped approaches), and the full limitations/honest-ceiling disclosure. Use when a reviewer agent is asked to "review/evaluate the MAP proxy", "decide whether to approve the MAP proxy pilot", "judge the MAP proxy validity case", or needs full reasoning context (not a checklist) to make an informed, fair judgment. The SKILL.md body is self-contained (every number and evidence tag needed for a normal review is embedded below); the full, unabridged source documents (BrainLift, Case for Approval, Audits & Fixes, Psychometric Design, Item Bank, Simulation Evidence, Concurrent Validity Plan, Limitations, Sources, and the master Validity Case) are bundled in references/ for deep technical dives — read them on demand, not by default. Grounded in documents dated 2026-07-03 and NWEA's MAP Growth Technical Report for 2024-2025 / 2025 Norms.
 ---
 
 # Incept MAP Proxy (G2–G5 Reading CAT) — reviewer knowledge base
@@ -20,6 +20,8 @@ You are a **reviewer agent** — for example, an academics-team evaluating agent
 | **[Open]** | Needs data that does not yet exist — the pilot or the concurrent-validity study |
 
 **Context that frames everything:** this is a **pre-pilot** instrument. No student has ever taken it and the real MAP in the same window. Three adversarial reviews (two independent audits plus a second teammate review — see §5) were run against the full documentation package before it reached an approver, and every finding was fixed or disclosed rather than argued away. The single most important discipline in this package: **the claims ladder is enforced in code, not prose** — RIT, percentile, and CGP output are blocked in the engine itself until a concurrent-validity study exists. A document can drift; a blocked API response cannot.
+
+**One process note a careful reviewer should track.** As of this skill's last sync, the validity package (BrainLift, Case for Approval, and every simulation-evidence table) already presents the **v4 full-bank run** as authoritative — but the underlying v4 validation report and its raw data file live on an **open, unmerged pull request** in the engine repository, not yet on its main branch. This is a process gap (docs moved ahead of the artifact landing), not a numbers problem: the v4 figures themselves are the real output of a completed run, re-derivable from the committed simulation harness. Confirm the PR has merged before treating v4 as permanently settled; if it's still open, say so rather than implying the report is generally available in the repo.
 
 **This SKILL.md is a curated distillation, not the only source.** Every claim below is condensed from a set of full source documents bundled alongside this skill in `references/` — the exact BrainLift, Case for Approval, Audits & Fixes, Psychometric Design, Item Bank, Simulation Evidence, Concurrent Validity Plan, Limitations, Sources, and master Validity Case tabs, verbatim except for one redaction (the internal approver's name, replaced with a role description — no evidence, number, or disclosure was altered). Use this file for the reasoning and the verdict; open a specific reference file when you need an exact table, a full equation, a per-standard item count, or a direct quote to cite. See §8 for which reference answers which kind of question.
 
@@ -67,51 +69,51 @@ Every other section of this skill derives from these seven positions.
 
 **Key derived insights (DOK3), condensed:**
 - **Two products, one engine, staged.** Pre-linking: an interim diagnostic (logit growth curves, domain sub-scores, engagement flags). Post-linking: a RIT-scale proxy (percentile, CGP-style growth, historical comparability). Neither stage borrows the other's claims.
-- **The pilot is designed to resolve precision, not guaranteed to.** The v3 run closed the two flagged v1 issues (RMSE, bias — see §3), leaving one reported gap (reliability 0.929 vs. ≥0.93) and a residual band-level bias, both root-caused to expert-assigned difficulty parameters. Empirical calibration accrued from regular use is the closer — this is exactly why the ask is real usage, not more simulation.
+- **The pilot is designed to resolve remaining precision, not guaranteed to.** The v4 full-bank run closed every issue the v1 run had flagged (RMSE, bias, reliable-range floor — see §3): reliability now meets its ≥0.93 target and bias is near-eliminated. What remains — the distance to MAP's own published 0.96 operational reliability, and per-band exposure balance — traces to expert-assigned difficulty parameters. Empirical calibration accrued from regular use is the closer — this is exactly why the ask is real usage, not more simulation.
 - **Domain sub-scores match what the platform already stores** — Alpha's MAP imports carry the same three Reading 2–5 goal areas in OneRoster metadata, so per-domain history (including the documented weak domain, Informational Text) is queryable across proxy and official MAP in one structure.
 - **Bank economics bind at the edges, and the edges differ by grade** — not at the average. See §3.
 
 ---
 
-## 3. What is actually built (live-verified, v3 run 2026-07-03 — authoritative)
+## 3. What is actually built (live-verified, v4 full-bank run 2026-07-03 — authoritative)
 
 **Live artifacts:**
 
 | Artifact | Status |
 |---|---|
 | Adaptive engine | Live on Cloud Run — Fisher-information CAT, domain quotas, Rasch 1PL, MLEF with 3.8-logit fence |
-| Operational item bank | **650 items**, 13 fixture files, provisional difficulties ≈ RIT 175–220 — this is what the v3 validation ran against |
-| Staged bank expansions | +92 edge items (floor to ~RIT 155, ceiling to 235) and +44 items (26 standard-gap + 18 G5 super-ceiling, RIT 231–250) — merged and harness-loadable, giving **766 items** total, b −4.45→+4.55 ≈ RIT 155–245. Adoption into the *production* bank is a reviewable decision pending calibration — do not present 766 as the currently-scored bank. |
+| Operational item bank | **650 items**, 13 fixture files, provisional difficulties ≈ RIT 175–220 |
+| Staged bank expansions | +92 edge items (floor to ~RIT 155, ceiling to 235) and +44 items (26 standard-gap + 18 G5 super-ceiling, RIT 231–250) — merged, and the `load_bank()` build dedups to **786 harness-loadable unique items**, b −4.45→+4.55 ≈ RIT 155–250. This full 786-item bank is what the authoritative v4 validation ran against. Adoption into the *operational* bank remains a reviewable decision pending calibration — the two are tracked separately (786 harness-loadable vs. 650 operational) even though v4 has already validated the larger set. |
 | Item formats | 6 (see §1 for which 3 are Reading-2–5-confirmed) |
 | Quality gate | 14-dimension quality check, ≥0.85 pass threshold, before any item enters the bank (text-dependence ablation, CCSS alignment, near-neighbor distractors, Lexile-to-band matching) |
 | Session structure | **14 Literary / 13 Informational / 13 Vocabulary = 40 scored items**, extending to 43 for precision; SE stop 0.35 evaluated only at ≥40 items — the TimeBack-parity operational blueprint, disclosed as distinct from NWEA's example 13/13/13 |
 | TEI floor | ≥12 technology-enhanced items per session (gap-match counted), enforced at the assembled-session level, not just an authoring target |
 | TimeBack integration | Live in staging — Cognito SSO login, Caliper gradebook events, course registered under Alpha School |
-| Score output | Logit θ ± SE only, plus 3 domain sub-scores; RIT is code-blocked pre-linking. The reported SE is **b-uncertainty-adjusted** (Fisher SE × 1.08 under v3, `se_basis`-labeled) because plain Fisher SE understates uncertainty from unconverted provisional b-values — the inflation removes itself automatically once empirical calibration lands. |
+| Score output | Logit θ ± SE only, plus 3 domain sub-scores; RIT is code-blocked pre-linking. The reported SE is **b-uncertainty-adjusted** (Fisher SE × 1.02 under v4, `se_basis`-labeled) because plain Fisher SE understates uncertainty from unconverted provisional b-values — the inflation removes itself automatically once empirical calibration lands. |
 
-**v3 simulation results** (production selection path + randomesque exposure control, 650 items, G2–G5 prior, ~17,900 sessions across 7 studies) — report every miss alongside every hit:
+**v4 full-bank simulation results** (production selection path + randomesque exposure control, full 786-item bank, G2–G5 prior, ~17,900 sessions across 7 studies) — report every miss alongside every hit:
 
-| Metric | v3 result | Benchmark | Verdict |
+| Metric | v4 result | Benchmark | Verdict |
 |---|---|---|---|
-| Theta recovery r | **0.963** | ≥0.90 | Meets |
-| RMSE | **3.44 RIT** | <4.0 RIT | Meets |
-| Systematic bias | **−0.38 RIT** (reliable-range −0.27; max per-band 0.83) | \|bias\|<0.5 overall, ≤1.5 per band | Meets |
-| SEM (core band) | **3.18 RIT** | ≤4.0 RIT (MAP's published CSEM: 3.3–3.6) | Meets |
-| Marginal reliability | **0.929** | ≥0.93 target; MAP published: 0.96 | **0.001 short — the one reported gap** |
+| Theta recovery r | **0.967** | ≥0.90 | Meets |
+| RMSE | **3.20 RIT** | <4.0 RIT | Meets |
+| Systematic bias | **−0.04 RIT** (near-eliminated; reliable-range −0.04; max per-band 0.83) | \|bias\|<0.5 overall, ≤1.5 per band | Meets |
+| SEM (core band) | **3.14 RIT** | ≤4.0 RIT (MAP's published CSEM: 3.3–3.6) | Meets |
+| Marginal reliability | **0.931** | ≥0.93 target; MAP published: 0.96 | **Meets the target — MAP's own 0.96 remains the higher operational bar** |
 | Blueprint adherence | **100%** (±1 vs. 14/13/13) | 100% | Meets |
 | TEI floor met | **100% of sessions** (mean 16.2 ≥ 12) | 100% | Meets |
-| Internal cross-bank consistency (synthetic, **not MAP agreement**) | r=0.912, 95% LoA [−10.7, +10.2] RIT | r≥0.85 | Meets, with synthetic-bank caveats |
+| Internal cross-bank consistency (synthetic, **not MAP agreement**) | r=0.918, 95% LoA [−10.0, +10.0] RIT | r≥0.85 | Meets, with synthetic-bank caveats |
 | Robustness to parameter error | reliability ≥0.915 through σ=1.0 logits | ≥0.85 | Meets |
 | MLEF divergences | **0 / ~17,900 sessions** | 0 | Meets |
-| Reliable measurement range | **RIT 181–227** | — | Scoped honestly; G2 fall median (~170) sits below it |
+| Reliable measurement range | **RIT 160–230** | — | The median G2 fall reader (~170) is now *inside* the reliable range — previously below it (v3: RIT 181–227) |
 
-**Report the history, not just the final table — it is itself evidence of rigor.** The first production-path run (v1, 2026-07-02) *regressed* RMSE to 4.73 and surfaced a **+2.62 RIT systematic overestimate**, and both were published rather than hidden. Root-cause (v2): the bias lived in the Owen running estimate's prior shrinkage, not in the shipped score; re-basing the final score on the engine's actual MLEF value removed it (bias fell to −0.46, RMSE to 3.70). v3 re-validates everything under the TimeBack-parity configuration with randomesque exposure control, landing at RMSE 3.44 / bias −0.38. **A reviewer should treat this progression as a strength (the team found and fixed its own regression) — not soften it into "always been fine."**
+**Report the history, not just the final table — it is itself evidence of rigor.** The first production-path run (v1, 2026-07-02) *regressed* RMSE to 4.73 and surfaced a **+2.62 RIT systematic overestimate**, and both were published rather than hidden. Root-cause (v2): the bias lived in the Owen running estimate's prior shrinkage, not in the shipped score; re-basing the final score on the engine's actual MLEF value removed it (bias fell to −0.46, RMSE to 3.70). v3 re-validated everything under the TimeBack-parity configuration on the then-current 650-item bank (RMSE 3.44, bias −0.38, reliable range RIT 181–227). **v4 re-runs the identical suite on the full 786-item bank** after the floor/ceiling/standard-gap expansions merged, and every metric improved or held: bias is now near-eliminated (−0.04 RIT), reliability crossed its 0.93 target (0.931), and the reliable floor dropped ~21 RIT (181→160), pulling the median G2 fall reader inside the reliable range for the first time. **A reviewer should treat this whole progression as a strength (the team found its own regression, root-caused it, then re-validated at larger scale) — not soften any single run into "always been fine," and not stop reading at v3 when v4 is the current authoritative number.**
 
 **What is not yet resolved, stated plainly:**
-- A residual **negative bias of −0.4 to −1.0 RIT in the RIT 175–190 bands** (worst: −1.04 at 175–180) — a scorer-only decomposition is the queued follow-up, not yet complete.
-- Reliability sits **0.929 vs. the ≥0.93 target** (≈0.001 short) — and far below MAP's own published 0.96. Empirical calibration is the closer, not a documentation fix.
-- **38/650 items exceed 30% exposure**; **241/650 are never used** in the v3 run (improved from 322 in v1 via randomesque selection, but not solved) — item security is weaker than NWEA's 40,000+-item pool allows.
-- Two bank cells (`literary/171-180`, `informational/171-180`) remain **never served** by selection — a starvation issue, not a bank-size issue.
+- Marginal reliability (0.931) meets the team's own ≥0.93 target but remains **well below MAP's own published 0.96** operational figure — empirical calibration is the closer, not a documentation fix.
+- **38 items exceed 30% exposure**; **289 items are never used** in the v4 run on the larger 786-item bank (v3 on 650 items: 241 never-used; v1: 322) — the *count* of never-used items rose because the bank grew while session count held constant; max exposure itself fell (0.909→0.709), so concentration eased even as the raw never-used count rose. Per-band exposure balancing remains the open engineering follow-up.
+- The `literary/171-180` and `informational/171-180` selection cells **improved but are not yet fully served** (a starvation issue, not a bank-size issue) — b-band-aware passage scoring is the queued fix.
+- Item security is weaker than NWEA's 40,000+-item pool allows regardless of the 786 figure (mean pairwise between-session overlap 29.4%).
 
 ---
 
@@ -119,11 +121,11 @@ Every other section of this skill derives from these seven positions.
 
 **The ask:** approve a **Stage-2 feasibility pilot** — **~40 students, 1–2 classes, one ~45-minute adaptive session each** — and approve in principle a Stage-3 linking study where students take the proxy within two weeks of their official Fall 2026 MAP sitting, with the N≥1,000 paired cohort accruing through regular use inside Alpha's existing MAP calendar (not a separate recruitment).
 
-**The pilot is deliberately small, and the case says so.** ~40 students × ~40 items ≈ 1,600 responses against a 766-item bank — nowhere near the ~200 responses per item that calibration requires. **The pilot claims feasibility only** (completion rate, session duration, rapid-guess rates, teacher/student experience, early item red flags) — not calibration. Calibration accrues from regular use afterward, toward a ~300-student-equivalent response volume for the core band.
+**The pilot is deliberately small, and the case says so.** ~40 students × ~40 items ≈ 1,600 responses against a 786-item bank — nowhere near the ~200 responses per item that calibration requires. **The pilot claims feasibility only** (completion rate, session duration, rapid-guess rates, teacher/student experience, early item red flags) — not calibration. Calibration accrues from regular use afterward, toward a ~300-student-equivalent response volume for the core band.
 
 **The argument, in order:**
 1. Alpha's current population sits near the 46th percentile with a real low tail, its growth signal is invisible between MAP windows — measurably, not rhetorically (§2 SPOV1) — and the only interim standardized instrument in the platform (STAAR G3.2022: 33 items, 100% MCQ, no domain sub-scores) has **18 result records, at most one a real student** [Direct-pull].
-2. The instrument implements MAP's own published measurement design, verified against NWEA primary sources, and its adaptive engine passes its v3 simulation suite with every miss disclosed alongside every hit (§3).
+2. The instrument implements MAP's own published measurement design, verified against NWEA primary sources, and its adaptive engine passes its v4 full-bank simulation suite with every miss disclosed alongside every hit (§3).
 3. Three adversarial reviews of this documentation package were run before it reached an approver, and every finding was fixed or disclosed (§5) — what a reviewer is evaluating has already survived the review a skeptical reader would give it.
 
 **Three design commitments made in advance** (so the plan cannot be quietly re-scoped later):
@@ -142,10 +144,10 @@ Before this package reached an approver, **two independent adversarial audits** 
 | # | What was found | What is now true |
 |---|---|---|
 | 1 | Population baseline (206.4 RIT / 72nd percentile) was a coverage-biased slice, not the full population | **Re-baselined**: full population is n=915, mean RIT 196.0, 46th percentile [External-review]. The old figure was a compound of repeat-record over-weighting (+5.4 RIT), cohort staleness, and — largest — OneRoster source-coverage bias (the batch import is itself a high-achieving slice, ~74th percentile in every grade, of a population sitting near 46th) |
-| 2 | Reliability was reported as "0.930 ✅" against a 0.93 benchmark the underlying data actually showed as 0.928 (below) | Now stated honestly everywhere as **0.929** (v3), with MAP's own published 0.96 given as context |
-| 3 | The one failing metric (RMSE 4.12) was omitted from summary tables | RMSE appears in every summary table now, including the v1 regression to 4.73 — the full history is reported, not just the final number |
-| 4 | Item-bank source table summed to 520 while claiming 650 | Replaced with a programmatically-counted 13-file breakdown summing to exactly 650 |
-| 5 | Simulations were G3-scoped (630 items, simplified selector) but described as "G2–G5, production code" | Re-run on the true production path, root-caused, and re-validated under TimeBack parity (v3) — all 650 items, G2–G5 prior |
+| 2 | Reliability was reported as "0.930 ✅" against a 0.93 benchmark the underlying data actually showed as 0.928 (below) | Now stated honestly everywhere — and, as of the authoritative **v4 full-bank run, reliability is 0.931, genuinely meeting the ≥0.93 target** — with MAP's own published 0.96 given as the still-higher context bar |
+| 3 | The one failing metric (RMSE 4.12) was omitted from summary tables | RMSE appears in every summary table now, including the v1 regression to 4.73 — the full history is reported, not just the final number; v4's 3.20 RIT is comfortably within the <4.0 target |
+| 4 | Item-bank source table summed to 520 while claiming 650 | Replaced with a programmatically-counted 13-file breakdown summing to exactly 650 (the 786-item harness-loadable figure is a separate, later dedup count from `load_bank()` — see §3) |
+| 5 | Simulations were G3-scoped (630 items, simplified selector) but described as "G2–G5, production code" | Re-run on the true production path, root-caused (v2), re-validated under TimeBack parity on the 650-item bank (v3), and finally re-validated on the full **786-item bank (v4, authoritative)** — G2–G5 prior throughout |
 | 6 | A section framed the UI as a "pixel-accurate replica" built by scraping NWEA's practice site — a legal liability presented as a selling point | Rewritten as **MAP-like UI**: familiar conventions justified by response-process validity (AERA Standard 1.13), with a trademark disclaimer and a legal-review gate before external use |
 | 7 | "$28/student," "competitors are fixed-form," "open-source engine" — each contradicted by public evidence | All removed; the approval case carries no pricing and no competitive claims |
 | 8 | "All six formats confirmed in MAP Reading 2–5" overstated the source | Bounded: 3 formats confirmed Reading-specific, 3 documented more broadly — see §1 |
@@ -170,16 +172,16 @@ Before this package reached an approver, **two independent adversarial audits** 
 
 | # | Limitation | Current state |
 |---|---|---|
-| 1 | b-values are expert-assigned, not calibrated; SE(b̂) effectively infinite pre-pilot | Score reports emit a b-uncertainty-adjusted SE (×1.08) that self-removes post-calibration |
-| 2 | Residual band-level bias + reliability gap | −0.4 to −1.0 RIT bias in RIT 175–190 bands; reliability 0.929 vs. 0.93 target — both traced to the same root cause (provisional b-values under a wide prior); scorer-only decomposition (S12) queued |
+| 1 | b-values are expert-assigned, not calibrated; SE(b̂) effectively infinite pre-pilot | Score reports emit a b-uncertainty-adjusted SE (×1.02 under v4, down from ×1.08 under v3) that self-removes post-calibration |
+| 2 | Residual bias + distance to MAP's operational reliability | Bias is now **near-eliminated (−0.04 RIT)** on the full 786-item bank — this was the main v3 residual and it closed with the bank expansion, not a scorer fix. What remains: reliability (0.931) meets Incept's own ≥0.93 target but stays well below MAP's published 0.96 — both traced to expert-assigned b-values under a wide prior; empirical calibration is the closer |
 | 3 | RIT output blocked — no scale linking yet | The single most significant commercial limitation; deliberate, per SPOV3 |
-| 4 | No concurrent validity data exists | The core cross-bank "consistency" number (r=0.912) is a synthetic-bank check, explicitly not MAP-agreement evidence |
-| 5 | G2 items are the thinnest and least-validated band | Floor expansion to ~RIT 155 merged but not yet adopted into the production bank; sub-155 students route to the official K–2 MAP instrument as an explicit, owned boundary |
+| 4 | No concurrent validity data exists | The core cross-bank "consistency" number (r=0.918, v4) is a synthetic-bank check, explicitly not MAP-agreement evidence |
+| 5 | G2 low-tail measurement | **Largely closed on the full bank** — the v4 reliable range now reaches RIT 160 (from 181 at v3), so the median G2 fall reader (~170) sits inside it; only the bottom ~5% (below RIT 160) still route to the official K–2 MAP instrument, an explicit and now much smaller boundary |
 | 6 | All simulations assume Rasch is correctly specified | Real responses may show discrimination variability, guessing floors, multidimensionality, or fatigue effects — none modeled; post-field-trial item-fit analysis is the check |
-| 7 | 650 (or 766 harness-loadable) items vs. NWEA's 40,000+ | Weaker item security (29.4% mean pairwise session overlap), limited fine-grained within-standard discrimination — disclosed as a scope limit, not a validity defect |
-| 8 | Original simulation scope (G3-only, closed-form selector) understated production-path effects | Complete — v3 runs the real production selection code end-to-end |
+| 7 | 650 operational (786 harness-loadable) items vs. NWEA's 40,000+ | Weaker item security (29.4% mean pairwise session overlap); 289/786 items never used in the v4 run (rose from 241/650 at v3 as the bank grew, though max exposure fell 0.909→0.709) — per-band exposure balancing is the open engineering follow-up, disclosed as a scope limit, not a validity defect |
+| 8 | Original simulation scope (G3-only, closed-form selector) understated production-path effects | Complete — v4 runs the real production selection code end-to-end on the full bank |
 
-**Known vs. unknown, the honest summary:** the algorithm ranks students correctly (known, r=0.963) and is reliable at the core range (known, 0.929) — but whether the Rasch model is correctly specified is *assumed*, whether score X on the proxy equals score X on MAP is *unknown* until the concurrent study, and whether the test is free of demographic bias (DIF) is *unknown* until N=5,000 with a diverse sample. **A reviewer should treat "known" and "assumed"/"unknown" as different categories throughout this package, not synonyms for "the numbers look fine."**
+**Known vs. unknown, the honest summary:** the algorithm ranks students correctly (known, r=0.967) and meets its own reliability target at the core range (known, 0.931) — but whether the Rasch model is correctly specified is *assumed*, whether score X on the proxy equals score X on MAP is *unknown* until the concurrent study, and whether the test is free of demographic bias (DIF) is *unknown* until N=5,000 with a diverse sample. **A reviewer should treat "known" and "assumed"/"unknown" as different categories throughout this package, not synonyms for "the numbers look fine."**
 
 ---
 
@@ -206,7 +208,7 @@ Before this package reached an approver, **two independent adversarial audits** 
 - **Q2 — EBSR scoring alignment.** Partial credit vs. MAP's dichotomous rule — the *procedure* to decide is pre-committed (dual-scoring comparator, named decision statistic, decided before RIT unlock), but the outcome is the data's call, not yet known.
 - **Q3 — G2 form target.** Alpha's G2 records split across MAP K–2 (4 goal areas) and Reading 2–5 (3 areas); the proxy is built to 2–5 only. Current lean: stay 2–5-only, route below-floor G2 students to the official K–2 instrument. Medium confidence — genuinely open.
 - **Q4 — Linking method.** Linear equating (lower barrier, direction set) vs. concurrent calibration with NWEA anchor items (superior, needs a data-sharing agreement — an org call, not a design one).
-- **Q5 — Post-pilot exposure control.** Randomesque selection ships now (never-used items down 322→241); whether to add Sympson-Hetter item-level caps and/or a per-standard session cap stays open until real pilot exposure data exists.
+- **Q5 — Post-pilot exposure control.** Randomesque selection ships now (max exposure down 0.909→0.709 from v3 to v4, though the raw never-used count rose 241→289 as the bank grew to 786 items); whether to add Sympson-Hetter item-level caps and/or a per-standard session cap stays open until real pilot exposure data exists.
 
 **Deliberately dropped — re-proposing any of these is a regression, not a fresh idea:**
 
@@ -223,14 +225,14 @@ Before this package reached an approver, **two independent adversarial audits** 
 | Timed sections | MAP is an untimed power test; a clock changes the construct being measured |
 | Public no-login test URL, unshipped | Farmable by anonymous sessions; gated behind a flag before pilot |
 
-**Name the seam a reviewer should resolve:** whether this package is honestly framed as "design parity + simulation-validated algorithm, real-world equivalence explicitly Open" — or whether any newer document has let a flagged number (the 175–190 band bias, the 0.929 reliability, the synthetic-bank LoA) or an unearned phrase ("proven," "MAP-equivalent," a specific RIT projection) slip back in unqualified. Given the audit history in §5, the correct default assumption is that the current package is honest — the reviewer's job is to spot-check that it has stayed that way, not to assume it hasn't.
+**Name the seam a reviewer should resolve:** whether this package is honestly framed as "design parity + simulation-validated algorithm, real-world equivalence explicitly Open" — or whether any newer document has let a flagged number (the distance to MAP's 0.96 operational reliability, the per-band exposure imbalance, the synthetic-bank LoA) or an unearned phrase ("proven," "MAP-equivalent," a specific RIT projection) slip back in unqualified. Given the audit history in §5 and the fact that the v4 re-run resolved essentially every prior residual, the correct default assumption is that the current package is honest — the reviewer's job is to spot-check that it has stayed that way and that no document is still citing pre-v4 numbers as current, not to assume nothing has changed.
 
 ---
 
 ## 8. How to use this + sources
 
 1. Load §1 (NWEA ground truth) and §2 (the seven SPOVs) — these are the fixed reference points everything else derives from.
-2. Check §3 against whatever validation report you are handed — confirm it cites v3 (2026-07-03) numbers, not superseded v1/v2 figures, and that the disclosed gaps (reliability, band bias, exposure) are still present and not quietly softened.
+2. Check §3 against whatever validation report you are handed — confirm it cites **v4 (2026-07-03, full 786-item bank)** numbers, not superseded v1/v2/v3 figures, and that the disclosed gaps (distance to MAP's 0.96 reliability, exposure imbalance) are still present and not quietly softened.
 3. Weigh §4 (the ask) against §6 (the honest ceiling) — does the request match what the evidence actually supports (a feasibility pilot, not a RIT claim)?
 4. Use §5 to calibrate trust: this package has already been adversarially reviewed three times before reaching you. Spend your effort verifying the disclosed gaps are still disclosed, not re-discovering already-fixed problems.
 5. Run every design choice through §7; a locked decision is not up for debate, a genuinely open fork should be surfaced as such, and a dropped approach reappearing is itself a finding.
@@ -246,7 +248,7 @@ Before this package reached an approver, **two independent adversarial audits** 
 | `references/00_AUDITS_AND_FIXES.md` | Every one of the ~22 audit findings (not just the 16 condensed in §5) with full before/after text |
 | `references/01_PSYCHOMETRIC_DESIGN.md` | The actual Rasch/MLEF/PCM equations, engine code snippets, CAT termination-rule pseudocode, and the full constants table |
 | `references/02_ITEM_BANK.md` | Per-file bank composition, full format-distribution tables, the complete CCSS standard coverage matrix (all 4 grades), and the bank expansion priority queue |
-| `references/03_SIMULATION_EVIDENCE.md` | Full methodology for all 7 simulations, per-band tables, and the v1→v2→v3 progression in full detail |
+| `references/03_SIMULATION_EVIDENCE.md` | Full methodology for all 7 simulations, per-band tables, and the v1→v2→v3→v4 progression in full detail |
 | `references/04_CONCURRENT_VALIDITY_PLAN.md` | The complete Stage 2/3/4 rollout design, sample-size formulas, counterbalancing design, and the pre-committed EBSR decision procedure in full |
 | `references/05_LIMITATIONS.md` | All 8 limitations with full statement/impact/mitigation text, and the complete known-vs-unknown table |
 | `references/06_SOURCES.md` | The full APA bibliography with per-source "used for" annotations and verification status |
@@ -266,5 +268,5 @@ Before this package reached an approver, **two independent adversarial audits** 
 - AERA, APA, & NCME (2014). *Standards for Educational and Psychological Testing*.
 - Wise, S., & DeMars, C. (2005). Test-taker disengagement / rapid-guessing.
 - Black, P., & Wiliam, D. (1998); Kingston, N., & Nash, B. (2011). Formative/interim assessment effects.
-- v3 validation report (2026-07-03) — the authoritative simulation-validation source for every number in §3; not bundled verbatim (it lives in the engine repository), but its results are fully captured in `references/03_SIMULATION_EVIDENCE.md`.
+- v4 full-bank validation report (2026-07-03) — the authoritative simulation-validation source for every number in §3; not bundled verbatim (it lives in the engine repository, currently on an open PR pending merge), but its results are fully captured in `references/03_SIMULATION_EVIDENCE.md`.
 - MAP® is a registered trademark of HMH Education Company / NWEA; this instrument is independent and not affiliated with or endorsed by NWEA.

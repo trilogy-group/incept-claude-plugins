@@ -20,7 +20,7 @@ This is not an algorithm problem — it is a measurement scaling problem. It is 
 
 ### 1.2 Why Simulation 4 (internal cross-bank consistency) is not sufficient
 
-Simulation 4 — relabelled **internal cross-bank consistency (synthetic)**, because that is what it is — used a **synthetic MAP-like bank** with items drawn from an approximate difficulty distribution. The synthetic bank is not NWEA's actual bank. Even if it were, simulations assume the Rasch model is correctly specified — that all items discriminate equally and no guessing occurs. Real MAP items have been calibrated against millions of student responses; our provisional items have not. The v3 result (2026-07-03: r 0.912, 95% LoA [−10.7, +10.2] RIT, with disclosed synthetic-bank caveats) is a consistency check on the engine, not evidence of MAP agreement.
+Simulation 4 — relabelled **internal cross-bank consistency (synthetic)**, because that is what it is — used a **synthetic MAP-like bank** with items drawn from an approximate difficulty distribution. The synthetic bank is not NWEA's actual bank. Even if it were, simulations assume the Rasch model is correctly specified — that all items discriminate equally and no guessing occurs. Real MAP items have been calibrated against millions of student responses; our provisional items have not. The v4 result (2026-07-03: r 0.918, 95% LoA [−10.0, +10.0] RIT, with disclosed synthetic-bank caveats) is a consistency check on the engine, not evidence of MAP agreement.
 
 The study described in this document will replace the synthetic comparisons with real paired scores and, if successful, unlock RIT output in the engine. Any projected post-linking LoA is a hope stated in advance, not a result — see §4.2.
 
@@ -44,19 +44,19 @@ The study described in this document will replace the synthetic comparisons with
 
 Sample size formulas for linking precision are from Kolen & Brennan (2014 [Kolen-Brennan-2014] §4.3). For a linear equating with N=1,000, the RMSE of the linking transformation is approximately 1–2 RIT — sufficient for educational decision-making.
 
-**The honest arithmetic behind the ladder.** The pilot is ~40 students (1–2 classes) × ~40 items ≈ 1,600 responses against a 766-item bank — far below the ~200 responses per item that calibration requires, so the pilot makes **no calibration claims**. Its purpose is feasibility: completion rate, session duration, rapid-guess rates, teacher and student experience, and early item red flags from response patterns. Calibration then **accrues from regular use**: ongoing sessions accumulate toward the calibration thresholds (a ~300-student-equivalent response volume for core-band calibration), and the linking cohort (N ≥ 1,000 concurrent pairs) accrues through usage at the Fall 2026 MAP window — not through a separate recruitment.
+**The honest arithmetic behind the ladder.** The pilot is ~40 students (1–2 classes) × ~40 items ≈ 1,600 responses against a 786-item bank — far below the ~200 responses per item that calibration requires, so the pilot makes **no calibration claims**. Its purpose is feasibility: completion rate, session duration, rapid-guess rates, teacher and student experience, and early item red flags from response patterns. Calibration then **accrues from regular use**: ongoing sessions accumulate toward the calibration thresholds (a ~300-student-equivalent response volume for core-band calibration), and the linking cohort (N ≥ 1,000 concurrent pairs) accrues through usage at the Fall 2026 MAP window — not through a separate recruitment.
 
 **Grade composition target (linking cohort):** balanced across G2–G5, with at least 200 students per grade in the accrued linking cohort. This ensures item calibration is adequate across the full bank, not just the grade-center.
 
 **Ability distribution target:** representative of the intended test-taking population. Schools serving a wide range of RIT levels are preferred to avoid restriction of range, which reduces linking precision [Kolen-Brennan-2014 §2.4].
 
-**Tail coverage (pre-committed).** Natural CAT exposure concentrates responses at the population center: tail-band items would see only ~50–100 responses each under proportional usage — below the calibration floor. Two commitments follow. First, within the ~40-student pilot, deliberately include **≥8 below-median G2 readers and ≥8 above-median G5 readers** — this is coverage and feasibility at the edges (floor/ceiling UX and flag behavior), not calibration. Second, the **≥150 responses per tail-band item** target (floor bands ≈ RIT 155–180; ceiling bands ≈ RIT 225–245) attaches to the calibration stage that accrues from regular use. Per (grade × difficulty band) cell:
+**Tail coverage (pre-committed).** Natural CAT exposure concentrates responses at the population center: tail-band items would see only ~50–100 responses each under proportional usage — below the calibration floor. Two commitments follow. First, within the ~40-student pilot, deliberately include **≥8 below-median G2 readers and ≥8 above-median G5 readers** — this is coverage and feasibility at the edges (floor/ceiling UX and flag behavior), not calibration. Second, the **≥150 responses per tail-band item** target (floor bands ≈ RIT 155–180; ceiling bands ≈ RIT 225–250) attaches to the calibration stage that accrues from regular use. Per (grade × difficulty band) cell:
 
 | Cell | Pilot (~40) inclusion | Calibration target (accrued via regular use) |
 |---|---|---|
 | G2 × floor bands (RIT 155–180) | ≥8 below-median G2 readers (floor UX, flag behavior) | ≥150 responses per item |
 | G3–G4 × core bands (RIT 181–220) | Remainder of the cohort, proportional | ≥200 responses per item (natural exposure suffices) |
-| G5 × ceiling bands (RIT 225–245) | ≥8 above-median G5 readers (ceiling UX, flag behavior) | ≥150 responses per item |
+| G5 × ceiling bands (RIT 225–250) | ≥8 above-median G5 readers (ceiling UX, flag behavior) | ≥150 responses per item |
 
 ### 2.3 Counterbalancing design
 
@@ -148,9 +148,9 @@ Based on the internal cross-bank consistency simulation (Sim 4, synthetic — NO
 
 | Metric | Current estimate | Basis |
 |---|---|---|
-| Correlation with MAP | r ≈ 0.85–0.92 | Sim 4, v3 run: r=0.912 against a *synthetic* bank [SIMULATION] |
-| 95% LoA | ±8–15 RIT | Sim 4, v3 run: [−10.7, +10.2] RIT (synthetic-bank caveats disclosed) [SIMULATION] |
-| Mean difference | small residual expected | v3: overall bias −0.38 RIT (the v1 +2.62 overestimate was root-caused to the Owen running estimate and resolved); a residual −0.4 to −1.0 RIT negative bias persists in the RIT 175–190 bands and is under scorer-only decomposition; the linking intercept absorbs any constant component [SIMULATION] |
+| Correlation with MAP | r ≈ 0.85–0.92 | Sim 4, v4 run: r=0.918 against a *synthetic* bank [SIMULATION] |
+| 95% LoA | ±8–15 RIT | Sim 4, v4 run: [−10.0, +10.0] RIT (synthetic-bank caveats disclosed) [SIMULATION] |
+| Mean difference | small residual expected | v4: overall bias −0.04 RIT, near-eliminated on the full 786-item bank (the v1 +2.62 overestimate was root-caused to the Owen running estimate and resolved); the linking intercept absorbs any constant component [SIMULATION] |
 
 ### 4.2 Post-calibration (N=1,000 concurrent study) — a stated hope, not a projection we can defend
 
@@ -181,7 +181,7 @@ A 95% LoA of ±5–8 RIT would make the proxy suitable for instructional decisio
 
 **Status:** The current ask — 1–2 classes, G2–G5, one adaptive session each
 **Trigger:** Approval of the pilot
-**Purpose (feasibility, not calibration):** ~40 students × ~40 items ≈ 1,600 responses cannot calibrate a 766-item bank (calibration needs ~200 responses per item), so the pilot claims none. It establishes:
+**Purpose (feasibility, not calibration):** ~40 students × ~40 items ≈ 1,600 responses cannot calibrate a 786-item bank (calibration needs ~200 responses per item), so the pilot claims none. It establishes:
 - Completion rate and session duration under real classroom conditions
 - Rapid-guess rates and engagement-flag behavior
 - Teacher and student experience (including floor/ceiling UX for the deliberately included tail readers: ≥8 below-median G2, ≥8 above-median G5)
@@ -238,7 +238,7 @@ A 95% LoA of ±5–8 RIT would make the proxy suitable for instructional decisio
 RIT output is blocked in the engine pre-scale-linking [AUTHORING-DECISION]. The engine computes `RIT_approx = 200 + 10 × θ̂` internally for display in developer-facing logs, but this value is not surfaced in the student score report or API response. The score report outputs:
 
 **Pre-pilot (current):**
-- Overall logit score: θ̂ ± b-uncertainty-adjusted SE — the Fisher SE inflated by the current validation run's RMSE/SEM ratio (1.08 under v3), with an explicit `se_basis` field naming the adjustment; the inflation is removed automatically post-calibration (engine PR #33)
+- Overall logit score: θ̂ ± b-uncertainty-adjusted SE — the Fisher SE inflated by the current validation run's RMSE/SEM ratio (1.02 under v4), with an explicit `se_basis` field naming the adjustment; the inflation is removed automatically post-calibration (engine PR #33)
 - Domain logit scores: θ̂_literary, θ̂_informational, θ̂_vocabulary ± SE
 - Reliable range flag: "above/within/below reliable range"
 
