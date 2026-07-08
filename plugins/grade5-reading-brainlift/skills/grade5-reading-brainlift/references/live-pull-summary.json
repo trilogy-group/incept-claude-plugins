@@ -1,0 +1,54 @@
+{
+ "course_sourced_id": "g5-reading-merged-pp-9802",
+ "captured_at_utc": "2026-07-07T00:00:00+00:00",
+ "method": "GET read-back (read-only)",
+ "course_http": 200,
+ "components_total": 98,
+ "units": [
+  "g5-reading-merged-pp-9802-mastery-unit",
+  "g5-reading-merged-pp-9802-review-unit",
+  "g5-reading-merged-pp-9802-u0",
+  "g5-reading-merged-pp-9802-u1"
+ ],
+ "lessons_count": 94,
+ "non_gating_components": [
+  "g5-reading-merged-pp-9802-mastery-form-a",
+  "g5-reading-merged-pp-9802-mastery-form-b",
+  "g5-reading-merged-pp-9802-mastery-form-c",
+  "g5-reading-merged-pp-9802-mastery-form-d",
+  "g5-reading-merged-pp-9802-mastery-form-e",
+  "g5-reading-merged-pp-9802-mastery-unit",
+  "g5-reading-merged-pp-9802-review-1",
+  "g5-reading-merged-pp-9802-review-2",
+  "g5-reading-merged-pp-9802-review-3",
+  "g5-reading-merged-pp-9802-review-4",
+  "g5-reading-merged-pp-9802-review-5",
+  "g5-reading-merged-pp-9802-review-6",
+  "g5-reading-merged-pp-9802-review-7",
+  "g5-reading-merged-pp-9802-review-8",
+  "g5-reading-merged-pp-9802-review-unit"
+ ],
+ "component_resources_note": "filter returned none; tests derived from lesson-id convention",
+ "tests_readable": 94,
+ "item_refs_total": 1092,
+ "item_refs_unique": 559,
+ "item_id_suffix_census": {
+  "msq": 100,
+  "hottext": 132,
+  "sequence": 58,
+  "match": 178,
+  "mcq": 88,
+  "ebsr": 3
+ },
+ "item_spot_sample": {},
+ "content_lesson_tests": 81,
+ "review_tests": 8,
+ "mastery_form_tests": 5,
+ "content_items_unique": 772,
+ "ledger_counts": {
+  "certified_clean": 559,
+  "known_leaky": 213,
+  "unknown_format_safe": 0
+ },
+ "ledger_matches_pull": true
+}

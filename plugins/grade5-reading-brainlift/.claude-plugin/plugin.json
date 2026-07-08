@@ -1,9 +1,19 @@
 {
   "name": "grade5-reading-brainlift",
-  "description": "Brief + operator manual for the live Grade-5 reading course EduLLM Grade 5 Reading (g5-reading-merged-pp-9802) on TimeBack PowerPath-100 — design argument (leak-by-format, per-item cross-family certification), live build state, review frame, and operator recipes. NOTE: the co-located references/ and scripts/ directories this skill depends on are not yet bundled (SKILL.md only) — see the packaging note at the top of the skill.",
-  "version": "0.1.0",
+  "description": "Self-contained brief + operator manual for the live Grade-5 reading course g5-reading-merged-pp-9802: the design argument (leak-by-format, per-item cross-family certification, conversion by rewrite), the live-verified build state, the review context, and the operations layer — auth, live reads, the anti-leak gate, regen with rollback, feedback authoring, probes. Fully portable: bundled references/ carry the per-item ledger, evidence summary, decision memo, BrainLift, dated pull record, and cover email; bundled scripts/ include a stdlib-only TimeBack API client — no repository access required, only API credentials.",
+  "version": "0.4.7",
   "author": {
     "name": "Incept"
   },
-  "keywords": ["grade5", "reading", "timeback", "powerpath", "anti-leak", "course-review", "brainlift", "operator-manual"]
+  "keywords": [
+    "g5-reading-merged-pp-9802",
+    "grade5",
+    "course-review",
+    "brainlift",
+    "reviewer",
+    "operations",
+    "anti-leak-gate",
+    "timeback",
+    "qti"
+  ]
 }
